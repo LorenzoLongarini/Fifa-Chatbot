@@ -28,3 +28,8 @@ stories:
   - action: utter_did_that_help
   - intent: deny
   - action: utter_goodbye
+
+- story: find a player
+  steps:
+  - intent: find_player_intent
+  - action: find_player_action

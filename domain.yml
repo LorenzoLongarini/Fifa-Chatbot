@@ -8,6 +8,11 @@ intents:
   - mood_great
   - mood_unhappy
   - bot_challenge
+  - find_player_intent
+
+actions:
+- validate_find_player_form
+- find_player_action
 
 responses:
   utter_greet:
@@ -32,3 +37,18 @@ responses:
 session_config:
   session_expiration_time: 60
   carry_over_slots_to_new_session: true
+
+forms:
+  find_player_form:
+    required_slots:
+      - player_name
+
+entities:
+  - player_name
+  
+slots:
+  player_name:
+    type: text
+    mappings:
+      - type: from_text
+    influence_conversation: true

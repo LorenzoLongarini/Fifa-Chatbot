@@ -89,3 +89,12 @@ nlu:
     - are you a human?
     - am I talking to a bot?
     - am I talking to a human?
+  
+- intent: find_player_intent
+  examples: |
+    - [Messi](player_name)
+    - descrivi [Cristiano Ronaldo](player_name)
+    - quali sono le caratteristiche di [Benzema](player_name)
+    - Vorrei informazioni su [Lionel Messi](player_name)
+    - Chi è [Cristiano Ronaldo](player_name)?
+    - Dimmi di più su [Neymar](player_name)
