@@ -11,3 +11,16 @@ rules:
   steps:
   - intent: bot_challenge
   - action: utter_iamabot
+
+- rule: Find a player
+  steps:
+  - intent: find_player
+  - action: find_player_action
+
+- rule: Limit search
+  condition:
+    - active_loop: limit_search_form
+  steps:
+    - action: limit_search_form
+    - active_loop: null
+    - action: limit_search_action
