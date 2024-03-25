@@ -15,7 +15,7 @@ from rasa_sdk.types import DomainDict
 import pandas as pd
 import sys
 
-PATH = 'dataset/male_player_clear.csv'
+PATH = 'dataset/male_players_clear.csv'
 df = pd.read_csv(PATH)
 columns= ['player_id',
 'player_face_url',
@@ -54,7 +54,8 @@ class ActionFindPlayer(Action):
             dispatcher: CollectingDispatcher,
             tracker: Tracker,
             domain: DomainDict):
-        name = tracker.get_slot('player_name')  # Assicurati di estrarre correttamente l'entità
+        # name = tracker.get_slot('player_name')  # Assicurati di estrarre correttamente l'entità
+        name = next(tracker.get_latest_entity_values('player_name'), None)
         result = df[df['short_name'].str.contains(name, case=False, na=False)]
         
         if result.empty:
@@ -76,6 +77,31 @@ class ActionFindPlayer(Action):
         #         if not elem[0] in pl:
         #             pl=pl+f' - {elem[0]}, '
 
+
+        return []
+
+class ActionGetPlayerAge(Action):
+    def name(self) -> Text:
+        return "action_get_player_age"
+
+    def run(self, dispatcher: CollectingDispatcher,
+            tracker: Tracker,
+            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+        
+        name = next(tracker.get_latest_entity_values('player_name'), None)
+
+        result = df[df['short_name'].str.contains(name, case=False, na=False)]
+        
+        if result.empty:
+            dispatcher.utter_message(text='Non ci sono calciatori con questo nome')
+        else:
+            # player_age = result['age'].drop_duplicates().to_dict('records')
+            # first_player_age = result.iloc[0]['age']
+            # dispatcher.utter_message(text=f"L'età del giocatore {name} è {first_player_age}.")
+            player_infos = result[columns].drop_duplicates().to_dict('records')
+            response = f"I calciatori con nome {name} hanno le seguenti eta:\n" + "\n".join([f"- {info['short_name']}, Eta: {info['age']}" for info in player_infos])
+            dispatcher.utter_message(text=response)
+        
 
         return []
 

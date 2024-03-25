@@ -92,9 +92,22 @@ nlu:
   
 - intent: find_player_intent
   examples: |
-    - [Messi](player_name)
-    - descrivi [Cristiano Ronaldo](player_name)
-    - quali sono le caratteristiche di [Benzema](player_name)
-    - Vorrei informazioni su [Lionel Messi](player_name)
+    - [L. Messi](player_name)
+    - descrivi [F. Chiesa](player_name)
+    - quali sono le caratteristiche di [Neymar](player_name)
+    - Vorrei informazioni su [Benzema](player_name)
     - Chi è [Cristiano Ronaldo](player_name)?
-    - Dimmi di più su [Neymar](player_name)
+    - Dimmi di più su [Messi](player_name)
+
+- intent: create_team_intent
+  examples: |
+    - voglio creare una squadra
+    - team
+    - squadra
+    - crea team
+
+- intent: ask_player_age
+  examples: |
+   - qual'è l'eta di [Neymar](player_name)
+   - quanti anni ha [Messi](player_name)
+   - quanto è giovane [Cristiano Ronaldo](player_name)
