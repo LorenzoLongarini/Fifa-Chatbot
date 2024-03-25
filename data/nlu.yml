@@ -92,12 +92,50 @@ nlu:
   
 - intent: find_player_intent
   examples: |
-    - [L. Messi](player_name)
-    - descrivi [F. Chiesa](player_name)
-    - quali sono le caratteristiche di [Neymar](player_name)
-    - Vorrei informazioni su [Benzema](player_name)
-    - Chi è [Cristiano Ronaldo](player_name)?
-    - Dimmi di più su [Messi](player_name)
+    - dammi informazioni su [Lionel Messi](player_name)
+    - cosa puoi dirmi su [Cristiano Ronaldo](player_name)?
+    - vorrei sapere qualcosa riguardo [Neymar](player_name)
+    - chi è [Kylian Mbappé](player_name)?
+    - dimmi di [Kevin De Bruyne](player_name)
+    - cosa sai di [Virgil van Dijk](player_name)?
+    - mi interessa sapere di [Robert Lewandowski](player_name)
+    - fammi conoscere [Mohamed Salah](player_name)
+    - puoi parlarmi di [Erling Haaland](player_name)?
+    - che tipo di giocatore è [Jadon Sancho](player_name)?
+    - quali informazioni hai su [Harry Kane](player_name)?
+    - cosa posso sapere su [Paulo Dybala](player_name)?
+    - dimmi di [Sergio Ramos](player_name)
+    - vorrei informazioni su [Alisson Becker](player_name)
+    - cosa sai su [Trent Alexander-Arnold](player_name)?
+    - puoi parlarmi di [Marc-André ter Stegen](player_name)?
+    - qualcosa su [Raheem Sterling](player_name)?
+    - fammi sapere di [Kalidou Koulibaly](player_name)
+    - cosa puoi dirmi su [Giorgio Chiellini](player_name)?
+    - dimmi di [Bruno Fernandes](player_name)
+    - cosa sai su [Romelu Lukaku](player_name)?
+    - parlami di [Eden Hazard](player_name)
+    - quali sono le caratteristiche di [Phil Foden](player_name)?
+    - dimmi qualcosa su [Mason Mount](player_name)
+    - fammi sapere di [Frenkie de Jong](player_name)
+    - cosa posso sapere su [Matthijs de Ligt](player_name)?
+    - dammi informazioni riguardanti [Jorginho](player_name)
+    - che tipo di giocatore è [Son Heung-min](player_name)?
+    - cosa sai di [Luka Modric](player_name)?
+    - dimmi qualcosa su [Zlatan Ibrahimović](player_name)?)
+
+- intent: find_player_team_intent
+  examples: |
+    - la squadra è [Barcellona](team)
+    - [Milan](team)
+    - è del [Real Madrid](team)
+    - gioca nella [Juventus](team)
+
+- intent: find_player_age_intent
+  examples: |
+      - ha [34](age) anni
+      - è vecchio [23](age) anni
+      - ha solo [11](age) anni
+      - [20](age)
 
 - intent: create_team_intent
   examples: |

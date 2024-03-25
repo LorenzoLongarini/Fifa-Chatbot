@@ -32,6 +32,7 @@ stories:
 - story: find a player
   steps:
   - intent: find_player_intent
+  - action: utter_select_player
   - action: find_player_action
 
 # - story: create a team

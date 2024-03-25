@@ -54,15 +54,33 @@ class ActionFindPlayer(Action):
             dispatcher: CollectingDispatcher,
             tracker: Tracker,
             domain: DomainDict):
-        # name = tracker.get_slot('player_name')  # Assicurati di estrarre correttamente l'entità
-        name = next(tracker.get_latest_entity_values('player_name'), None)
-        result = df[df['short_name'].str.contains(name, case=False, na=False)]
+        player_name = tracker.get_slot('player_name')
+        player_team = tracker.get_slot('player_team')
+        player_age = tracker.get_slot('player_age')
+        # name = next(tracker.get_latest_entity_values('player_name'), None)
+        # name = tracker.get_slot('tipo_prodotto')
+
+        if not player_name:
+            dispatcher.utter_message(text='Per favore, specifica il nome di un calciatore.')
+            return []
         
-        if result.empty:
+        results = df[df['long_name'].str.contains(player_name, case=False, na=False)]
+
+        if len(results) > 1:
+            return ["player_name", "player_team", "player_age"]
+        elif len(results) == 1:
+            return ["player_name"]
+        
+        if result_long.empty:
             dispatcher.utter_message(text='Non ci sono calciatori con questo nome')
+        # elif len(result_long) == 1:
+        #     # player = result_long.iloc[0]
+        #     player_infos = result_long[columns].to_dict('records')
+        #     response = f"Il calciatori con nome {name} è:\n" + "\n".join([f"- {result_long['short_name']}, Club: {result_long['club_name']}"])
+        #     dispatcher.utter_message(text=response)
         else:
-            player_infos = result[columns].drop_duplicates().to_dict('records')
-            response = f"I calciatori con nome {name} sono:\n" + "\n".join([f"- {info['short_name']}, Club: {info['club_name']}" for info in player_infos])
+            player_infos = result_long[columns].to_dict('records')
+            response = f"I calciatori con nome {name} sono:\n" + "\n".join([f"- {info['short_name']}, Club: {info['club_name']}" for info in player_infos]) 
             dispatcher.utter_message(text=response)
         
         # name = tracker.latest_message['entities'][0]['value']
