@@ -48,14 +48,17 @@ columns= ['player_id',
 'physic']
 
 def find_team(input, search, dispatcher):
-    matches = process.extract(input, df[search].unique(), limit= 5)
+    matches = process.extract(str(input), df[search].unique(), limit= 5)
     print(matches)
-    best_match = matches[0]
-    print(best_match)
-    if best_match[1] >= 80:
-        return best_match[0]
+    if len(matches) == 0:     
+        return dispatcher.utter_message(text='La squadra inserita non esiste')
     else:
-         dispatcher.utter_message(text='La squadra inserita non esiste')
+        best_match = matches[0]
+
+        if best_match[1] >= 80:
+            return best_match[0]
+        else:
+            dispatcher.utter_message(text='La percentual è bassa')
 
 class ActionFindTeam(Action):
     def name(self) -> Text:
@@ -67,13 +70,14 @@ class ActionFindTeam(Action):
             domain: DomainDict):
         
         team = next(tracker.get_latest_entity_values('team'), None)
-        finded = find_team(team, search='club_name', dispatcher = dispatcher)
-        teams =  df[df['club_name'].str.contains(finded, case=False, na=False)]
-        
-        team_infos = teams[columns].to_dict('records')
-        response = f"Le squadre con nome {team} sono:\n" + "\n".join([f"- {info['club_name']} : {info['long_name']}" for info in team_infos]) 
-        dispatcher.utter_message(text=response)
-
+        if team is not None:
+            finded = find_team(team, search='club_name', dispatcher = dispatcher)
+            teams =  df[df['club_name'] == (str(finded))] 
+            team_infos = teams[columns].to_dict('records')
+            response = f"Le squadre con nome {team} sono:\n" + "\n".join([f"- {info['club_name']} : {info['long_name']}" for info in team_infos]) 
+            dispatcher.utter_message(text=response)
+        else:
+            dispatcher.utter_message(text='Non ho capito a quale squadra ti riferisci')
 
 
 
