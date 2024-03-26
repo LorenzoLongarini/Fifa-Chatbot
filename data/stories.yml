@@ -29,11 +29,11 @@ stories:
   - intent: deny
   - action: utter_goodbye
 
-- story: find a player
-  steps:
-  - intent: find_player_intent
-  - action: utter_select_player
-  - action: find_player_action
+# - story: find a player
+#   steps:
+#   - intent: find_player_intent
+#   - action: utter_select_player
+#   - action: find_player_action
 
 # - story: create a team
 #   steps:
@@ -48,7 +48,12 @@ stories:
 #   - active_loop: null
 #   - action: utter_confirm_create_team
 
-- story: Get player age
+# - story: Get player age
+#   steps:
+#   - intent: ask_player_age
+#   - action: action_get_player_age
+
+- story: search players by team
   steps:
-  - intent: ask_player_age
-  - action: action_get_player_age
+  - intent: find_team_intent
+  - action: find_team_action
