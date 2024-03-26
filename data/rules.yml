@@ -12,15 +12,3 @@ rules:
   - intent: bot_challenge
   - action: utter_iamabot
 
-- rule: Find a player team
-  steps:
-  - intent: find_team_intent
-  - action: find_team_action
-
-# - rule: Limit search
-#   condition:
-#     - active_loop: limit_search_form
-#   steps:
-#     - action: limit_search_form
-#     - active_loop: null
-#     - action: limit_search_action
