@@ -8,20 +8,13 @@ intents:
   - mood_great
   - mood_unhappy
   - bot_challenge
-  # - find_player_intent
-  # - find_player_team_intent
-  # - find_player_age_intent
   - find_team_intent
-  #- create_team_intent
-  # - ask_player_age
+  - find_best_player 
 
 actions:
-# - validate_find_player_form
-# - find_player_action
-# - get_player_age_action
-# - limit_search_action
 - find_team_action
-
+- validate_search_bplayer_form
+- get_bplayer
 
 responses:
   utter_greet:
@@ -46,39 +39,37 @@ responses:
   utter_name_player:
   - text: "What is the name of the player?"
 
-  # utter_select_player:
-  # - text: "Seleziona un calciatore inserendo il nome corretto"
-
   utter_confirm_create_team:
   - text: "You have a team!"
-  
-  # utter_ask_team:
-  # - text: "A quale squadra appartiene il calciatore?"
 
-  # utter_ask_age:
-  # - text: "Qual è l'età del calciatore?"
+  utter_ask_role:
+    - text: "Qual è il ruolo del calciatore?"
+
+  utter_ask_league:
+    - text: "In quale campionato gioca?"
+
+  utter_ask_preferred_foot:
+    - text: "Qual è il piede preferito del calciatore?"
+
+  utter_submit:
+    - text: "Ok hai inserito i dati correttamente!"
 
 session_config:
   session_expiration_time: 60
   carry_over_slots_to_new_session: true
 
-# forms:
-#   find_player_form:
-#     required_slots:
-#       - player_name
-#       - player_team
-#       - player_age
-
-  # create_team_form:
-  #   required_slots:
-  #     - player_name
-  #     - player_name
+forms:
+  validate_search_bplayer_form:
+    required_slots:
+      - role
+      - league
+      - preferred_foot
 
 entities:
   - team
-  # - player_name
-  # - player_team
-  # - player_age
+  - role
+  - league
+  - preferred_foot
 
 slots:
   team:
@@ -86,18 +77,21 @@ slots:
     mappings:
       - type: from_text
     influence_conversation: false
-  # player_name:
-  #   type: text
-  #   mappings:
-  #     - type: from_text
-  #   influence_conversation: true
-  # player_team:
-  #   type: text
-  #   mappings:
-  #     - type: from_text
-  #   influence_conversation: true
-  # player_age:
-  #   type: text
-  #   mappings:
-  #     - type: from_text
-  #   influence_conversation: true
+  role:
+    type: text
+    mappings:
+    - type: from_entity
+      entity: role
+    influence_conversation: true
+  league:
+    type: text
+    mappings:
+    - type: from_entity
+      entity: league
+    influence_conversation: true
+  preferred_foot:
+    type: text
+    mappings:
+    - type: from_entity
+      entity: preferred_foot
+    influence_conversation: true

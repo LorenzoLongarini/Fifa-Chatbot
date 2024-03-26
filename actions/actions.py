@@ -12,6 +12,7 @@ from typing import Any, Text, Dict, List
 from rasa_sdk import Action, Tracker
 from rasa_sdk.executor import CollectingDispatcher
 from rasa_sdk.types import DomainDict
+from rasa_sdk.forms import FormValidationAction
 import pandas as pd
 import sys
 from fuzzywuzzy import process
@@ -47,7 +48,7 @@ columns= ['player_id',
 'defending',
 'physic']
 
-def find_team(input, search, dispatcher):
+def find_values(input, search, dispatcher):
     matches = process.extract(str(input), df[search].unique(), limit= 5)
     print(matches)
     if len(matches) == 0:     
@@ -71,7 +72,7 @@ class ActionFindTeam(Action):
         
         team = next(tracker.get_latest_entity_values('team'), None)
         if team is not None:
-            finded = find_team(team, search='club_name', dispatcher = dispatcher)
+            finded = find_values(team, search='club_name', dispatcher = dispatcher)
             teams =  df[df['club_name'] == (str(finded))] 
             team_infos = teams[columns].to_dict('records')
             response = f"Le squadre con nome {team} sono:\n" + "\n".join([f"- {info['club_name']} : {info['long_name']}" for info in team_infos]) 
@@ -80,85 +81,81 @@ class ActionFindTeam(Action):
             dispatcher.utter_message(text='Non ho capito a quale squadra ti riferisci')
 
 
+class ValidateSearchBPlayerForm(FormValidationAction):
+    def name(self) -> Text:
+        return "validate_search_bplayer_form"
 
-
-# class ActionFindPlayer(Action):
-
-#     def name(self) -> Text:
-#         return "find_player_action"
-
-#     def run(self, 
-#             dispatcher: CollectingDispatcher,
-#             tracker: Tracker,
-#             domain: DomainDict):
-#         player_name = tracker.get_slot('player_name')
-#         player_team = tracker.get_slot('player_team')
-#         player_age = tracker.get_slot('player_age')
-#         # name = next(tracker.get_latest_entity_values('player_name'), None)
-#         # name = tracker.get_slot('tipo_prodotto')
-
-#         if not player_name:
-#             dispatcher.utter_message(text='Per favore, specifica il nome di un calciatore.')
-#             return []
-        
-#         results = df[df['long_name'].str.contains(player_name, case=False, na=False)]
-
-#         if len(results) > 1:
-#             return ["player_name", "player_team", "player_age"]
-#         elif len(results) == 1:
-#             return ["player_name"]
-        
-#         if result_long.empty:
-#             dispatcher.utter_message(text='Non ci sono calciatori con questo nome')
-#         # elif len(result_long) == 1:
-#         #     # player = result_long.iloc[0]
-#         #     player_infos = result_long[columns].to_dict('records')
-#         #     response = f"Il calciatori con nome {name} è:\n" + "\n".join([f"- {result_long['short_name']}, Club: {result_long['club_name']}"])
-#         #     dispatcher.utter_message(text=response)
-#         else:
-#             player_infos = result_long[columns].to_dict('records')
-#             response = f"I calciatori con nome {name} sono:\n" + "\n".join([f"- {info['short_name']}, Club: {info['club_name']}" for info in player_infos]) 
-#             dispatcher.utter_message(text=response)
-        
-#         # name = tracker.latest_message['entities'][0]['value']
-#         # dispatcher.utter_message(text="Hello World!")
-#         # result = df.loc[df['short_name'] == name]
-
-#         # if len(result)==0:
-#         #     dispatcher.utter_message('Non ci sono calciatori con questo nome')
-#         # else:
-#         #     pl = f'I calciatori con nome {name} sono: \n'
-#         #     for elem in result:
-#         #         if not elem[0] in pl:
-#         #             pl=pl+f' - {elem[0]}, '
-
-
-#         return []
-
-# class ActionGetPlayerAge(Action):
-#     def name(self) -> Text:
-#         return "action_get_player_age"
-
-#     def run(self, dispatcher: CollectingDispatcher,
-#             tracker: Tracker,
-#             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
-        
-#         name = next(tracker.get_latest_entity_values('player_name'), None)
-
-#         result = df[df['short_name'].str.contains(name, case=False, na=False)]
-        
-#         if result.empty:
-#             dispatcher.utter_message(text='Non ci sono calciatori con questo nome')
-#         else:
-#             # player_age = result['age'].drop_duplicates().to_dict('records')
-#             # first_player_age = result.iloc[0]['age']
-#             # dispatcher.utter_message(text=f"L'età del giocatore {name} è {first_player_age}.")
-#             player_infos = result[columns].drop_duplicates().to_dict('records')
-#             response = f"I calciatori con nome {name} hanno le seguenti eta:\n" + "\n".join([f"- {info['short_name']}, Eta: {info['age']}" for info in player_infos])
-#             dispatcher.utter_message(text=response)
+    def validate_team(
+        self,
+        slot_value: Any,
+        dispatcher: CollectingDispatcher,
+        tracker: Tracker,
+        domain: DomainDict,
+    ) -> Dict[Text, Any]:
         
 
-#         return []
+        finded = find_values(slot_value, search='club_name', dispatcher = dispatcher)
+        if len(finded) != 0:
+            # validation succeeded, set the value of the "cuisine" slot to value
+            return {"league": finded}
+        else:
+            dispatcher.utter_message("Non ho trovato un club con questo nome")
+            return {"league": None}
+
+    def validate_role(
+        self,
+        slot_value: Any,
+        dispatcher: CollectingDispatcher,
+        tracker: Tracker,
+        domain: DomainDict,
+    ) -> Dict[Text, Any]:
+        
+
+        finded = find_values(slot_value, search='player_positions', dispatcher = dispatcher)
+        if len(finded) != 0:
+            # validation succeeded, set the value of the "cuisine" slot to value
+            return {"role": finded}
+        else:
+            dispatcher.utter_message("Non ho trovato questo ruolo")
+            return {"role": None}
+        
+    def validate_foot(
+        self,
+        slot_value: Any,
+        dispatcher: CollectingDispatcher,
+        tracker: Tracker,
+        domain: DomainDict,
+    ) -> Dict[Text, Any]:
+        
+
+        finded = find_values(slot_value, search='preferred_foot', dispatcher = dispatcher)
+        if len(finded) != 0:
+            # validation succeeded, set the value of the "cuisine" slot to value
+            return {"preferred_foot": finded}
+        else:
+            dispatcher.utter_message("Devi inserire Right o Left")
+            return {"preferred_foot": None}
+
+class GetBPlayer(Action):
+    def name(self) -> Text:
+        return "get_bplayer"
+
+    def run(self,
+            #slot_value: Any,
+            dispatcher: CollectingDispatcher,
+            tracker: Tracker,
+            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+        
+        league = tracker.get_slot('league')
+        role = tracker.get_slot('role')
+        preferred_foot = tracker.get_slot('preferred_foot')
+        best_player =  df[(df['club_name'] == str(league)) & (df['player_positions'] == str(role)) & (df['preferred_foot'] == str(preferred_foot))] 
+
+        if len(best_player) == 0:
+            dispatcher.utter_message("Non ci sono calciatori che rispettano queste condizioni!")
+        else:
+            response = f"Il miglior giocatore è :\n" + "\n".join([f"- {info['club_name']} : {info['long_name']}" for info in best_player]) 
+            dispatcher.utter_message(text=response)
 
 class ActionHelloWorld(Action):
     def name(self) -> Text:

@@ -123,6 +123,30 @@ nlu:
 #     - cosa sai di [Luka Modric](player_name)?
 #     - dimmi qualcosa su [Zlatan Ibrahimović](player_name)?)
 
+- intent: find_best_player
+  examples: |
+    - Chi è il miglior calciatore?
+    - Dimmi il migliore giocatore di tutti i tempi.
+    - Qual è il numero uno nel mondo del calcio?
+    - Vorrei conoscere il calciatore più talentuoso.
+    - Chi è considerato il miglior giocatore di sempre?
+    - Dammi informazioni sul calciatore più forte.
+    - Chi è il numero uno secondo le statistiche?
+    - Vorrei sapere chi è il re del calcio.
+    - Qual è il giocatore più votato nel dataset?
+    - Chi è il campione indiscusso del calcio?
+    - Dimmi chi è il miglior calciatore di sempre.
+    - Vorrei conoscere il calciatore più apprezzato.
+    - Chi è il leader del calcio mondiale?
+    - Dimmi chi è il giocatore più quotato.
+    - Qual è il nome del calciatore più influente?
+    - Chi è il giocatore più rinomato?
+    - Vorrei sapere chi è il miglior giocatore valutato.
+    - Chi è considerato il migliore nella storia del calcio?
+    - Dimmi chi è il giocatore più ammirato.
+    - Qual è il calciatore più stimato nel dataset?
+
+
 - intent: find_team_intent
   examples: |
     - Vorrei informazioni su [Inter](team)
@@ -159,22 +183,3 @@ nlu:
     - Formazione per l'[AS Monaco](team)
     - Storia dell'[Arsenal](team)
 
-# - intent: find_player_age_intent
-#   examples: |
-#       - ha [34](age) anni
-#       - è vecchio [23](age) anni
-#       - ha solo [11](age) anni
-#       - [20](age)
-
-# - intent: create_team_intent
-#   examples: |
-#     - voglio creare una squadra
-#     - team
-#     - squadra
-#     - crea team
-
-# - intent: ask_player_age
-#   examples: |
-#    - qual'è l'eta di [Neymar](player_name)
-#    - quanti anni ha [Messi](player_name)
-#    - quanto è giovane [Cristiano Ronaldo](player_name)

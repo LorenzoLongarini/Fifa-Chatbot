@@ -12,15 +12,19 @@ rules:
   - intent: bot_challenge
   - action: utter_iamabot
 
-- rule: Find a player team
-  steps:
-  - intent: find_team_intent
-  - action: find_team_action
-
-# - rule: Limit search
-#   condition:
-#     - active_loop: limit_search_form
+# - rule: Activate form find bplayer
 #   steps:
-#     - action: limit_search_form
-#     - active_loop: null
-#     - action: limit_search_action
+#     - intent: find_best_player
+#     - action: find_player_form
+#     - active_loop: find_player_form
+
+# - rule: Submit form
+#   condition:
+#   - active_loop: find_player_form
+#   steps:
+#   - action: find_player_form
+#   - active_loop: null
+#   - slot_was_set:
+#     - requested_slot: null
+  # - action: utter_submit
+  # - action: utter_slots_values

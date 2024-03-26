@@ -29,31 +29,22 @@ stories:
   - intent: deny
   - action: utter_goodbye
 
-# - story: find a player
-#   steps:
-#   - intent: find_player_intent
-#   - action: utter_select_player
-#   - action: find_player_action
-
-# - story: create a team
-#   steps:
-#   - intent: create_team_intent
-#   - action: utter_name_player
-#   - action: create_team_form
-#   - active_loop: create_team_form
-#   - slot_was_set:
-#     - requested_slot: player_name
-#   - slot_was_set:
-#     - requested_slot: player_name
-#   - active_loop: null
-#   - action: utter_confirm_create_team
-
-# - story: Get player age
-#   steps:
-#   - intent: ask_player_age
-#   - action: action_get_player_age
 
 - story: search players by team
   steps:
   - intent: find_team_intent
   - action: find_team_action
+
+- story: find best player
+  steps:
+    - intent: find_best_player
+    - action: validate_search_bplayer_form
+    - active_loop: validate_search_bplayer_form
+    - slot_was_set:
+      - requested_slot: league
+    - slot_was_set:
+      - requested_slot: role
+    - slot_was_set:
+      - requested_slot: preferred_foot
+    - active_loop: null
+    - action: get_bplayer
