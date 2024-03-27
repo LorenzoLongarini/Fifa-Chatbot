@@ -13,7 +13,11 @@ intents:
 
 actions:
 - find_team_action
-- validate_search_bplayer_form
+- validate_bplayer_form
+- utter_ask_role
+- utter_ask_league
+- utter_ask_preferred_foot
+- utter_submit
 - get_bplayer
 
 responses:
@@ -58,13 +62,6 @@ session_config:
   session_expiration_time: 60
   carry_over_slots_to_new_session: true
 
-forms:
-  validate_search_bplayer_form:
-    required_slots:
-      - role
-      - league
-      - preferred_foot
-
 entities:
   - team
   - role
@@ -79,19 +76,32 @@ slots:
     influence_conversation: false
   role:
     type: text
-    mappings:
-    - type: from_entity
-      entity: role
     influence_conversation: true
+    mappings:
+    - type: from_text
+      conditions:
+        - active_loop: bplayer_form
+          requested_slot: role
   league:
     type: text
-    mappings:
-    - type: from_entity
-      entity: league
     influence_conversation: true
+    mappings:
+    - type: from_text
+      conditions:
+        - active_loop: bplayer_form
+          requested_slot: league
   preferred_foot:
     type: text
-    mappings:
-    - type: from_entity
-      entity: preferred_foot
     influence_conversation: true
+    mappings:
+    - type: from_text
+      conditions:
+        - active_loop: bplayer_form
+          requested_slot: preferred_foot
+
+forms:
+  bplayer_form:
+    required_slots:
+      - role
+      - league
+      - preferred_foot

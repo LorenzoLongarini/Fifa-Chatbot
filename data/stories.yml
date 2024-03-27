@@ -38,13 +38,14 @@ stories:
 - story: find best player
   steps:
     - intent: find_best_player
-    - action: validate_search_bplayer_form
-    - active_loop: validate_search_bplayer_form
-    - slot_was_set:
-      - requested_slot: league
+    - action: bplayer_form
+    - active_loop: bplayer_form
     - slot_was_set:
       - requested_slot: role
     - slot_was_set:
+      - requested_slot: league
+    - slot_was_set:
       - requested_slot: preferred_foot
     - active_loop: null
+    - action: utter_submit
     - action: get_bplayer

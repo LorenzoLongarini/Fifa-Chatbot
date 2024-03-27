@@ -12,19 +12,39 @@ rules:
   - intent: bot_challenge
   - action: utter_iamabot
 
-# - rule: Activate form find bplayer
+- rule: Activate form find bplayer
+  condition:
+  - active_loop: bplayer_form
+  steps:
+    - intent: find_best_player
+    - action: bplayer_form
+    - active_loop: bplayer_form
+    - slot_was_set:
+      - requested_slot: role
+    - slot_was_set:
+      - requested_slot: league
+    - slot_was_set:
+      - requested_slot: preferred_foot
+    - active_loop: null
+    - action: utter_submit
+    - action: get_bplayer
+
+# - rule: Interruzione best player form
+#   condition:
+#   - active_loop: bplayer_form
 #   steps:
-#     - intent: find_best_player
-#     - action: find_player_form
-#     - active_loop: find_player_form
+#   - intent: bot_challenge
+#   - action: utter_iamabot
+#   - action: bplayer_form
+#   - active_loop: bplayer_form 
 
 # - rule: Submit form
 #   condition:
-#   - active_loop: find_player_form
+#   - active_loop: bplayer_form
 #   steps:
-#   - action: find_player_form
+#   - action: bplayer_form
 #   - active_loop: null
 #   - slot_was_set:
 #     - requested_slot: null
-  # - action: utter_submit
+#   - action: get_bplayer
   # - action: utter_slots_values
