@@ -26,8 +26,6 @@ pipeline:
     epochs: 100
     constrain_similarities: true
   - name: EntitySynonymMapper
-  - name: RegexEntityExtractor 
-    use_lookup_tables: true
   - name: ResponseSelector
     epochs: 100
     constrain_similarities: true
@@ -43,10 +41,12 @@ policies:
 # # See https://rasa.com/docs/rasa/policies for more information.
   - name: MemoizationPolicy
   - name: RulePolicy
-  - name: UnexpecTEDIntentPolicy
-    max_history: 5
-    epochs: 100
   - name: TEDPolicy
     max_history: 5
     epochs: 100
     constrain_similarities: true
+  - name: UnexpecTEDIntentPolicy
+    max_history: 5
+    epochs: 100
+ 
+  
