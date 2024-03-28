@@ -8,7 +8,7 @@ assistant_id: 20240321-151334-muted-van
 
 # Configuration for Rasa NLU.
 # https://rasa.com/docs/rasa/nlu/components/
-language: en, it
+language: it
 
 pipeline: 
 # # No configuration for the NLU pipeline was provided. The following default pipeline was used to train your model.
@@ -26,6 +26,8 @@ pipeline:
     epochs: 100
     constrain_similarities: true
   - name: EntitySynonymMapper
+  - name: RegexEntityExtractor 
+    use_lookup_tables: true
   - name: ResponseSelector
     epochs: 100
     constrain_similarities: true

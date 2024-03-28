@@ -17,6 +17,7 @@ from rasa_sdk.events import SlotSet
 import pandas as pd
 import sys
 from fuzzywuzzy import process
+from rasa_sdk.events import AllSlotsReset
 # sys.path.append('../utils')
 # from utils.utility import find_words as fw
 
@@ -61,7 +62,6 @@ def find_values(input, search, dispatcher):
         if best_match[1] >= 80:
             return best_match[0]
         else:
-            dispatcher.utter_message(text='La percentuale è bassa')
             return []
 
 class ActionFindTeam(Action):
@@ -98,12 +98,16 @@ class ValidateSearchBPlayerForm(FormValidationAction):
     ) -> Dict[Text, Any]:
         
         print(slot_value)
-        finded = find_values(slot_value, search='player_positions', dispatcher = dispatcher)
-        if not finded:
-            dispatcher.utter_message("Non ho trovato questo ruolo")
-            return {"role": None}
+        if slot_value == 'skip':
+            return {"role": ''}
         else:
-            return {"role": finded}
+            finded = find_values(slot_value, search='player_positions', dispatcher = dispatcher)
+            if not finded:
+                dispatcher.utter_message("Non ho trovato questo ruolo")
+                return {"role": None}
+            else:
+                return {"role": finded}
+        
     
     def validate_league(
         self,
@@ -114,12 +118,15 @@ class ValidateSearchBPlayerForm(FormValidationAction):
     ) -> Dict[Text, Any]:
         
         print(slot_value)
-        finded = find_values(slot_value, search='league_name', dispatcher = dispatcher)
-        if not finded:
-            dispatcher.utter_message("Non ho trovato un club con questo nome")
-            return {"league": None}
+        if slot_value == 'skip':
+            return {"league": ''}
         else:
-            return {"league": finded}
+            finded = find_values(slot_value, search='league_name', dispatcher = dispatcher)
+            if not finded:
+                dispatcher.utter_message("Non ho trovato un club con questo nome")
+                return {"league": None}
+            else:
+                return {"league": finded}
 
     def validate_preferred_foot(
         self,
@@ -130,12 +137,15 @@ class ValidateSearchBPlayerForm(FormValidationAction):
     ) -> Dict[Text, Any]:
         
         print(slot_value)
-        finded = find_values(slot_value, search='preferred_foot', dispatcher = dispatcher)
-        if not finded:
-            dispatcher.utter_message("Devi inserire Right o Left")
-            return {"preferred_foot": None}
+        if slot_value == 'skip':
+            return {"preferred_foot": ''}
         else:
-            return {"preferred_foot": finded}
+            finded = find_values(slot_value, search='preferred_foot', dispatcher = dispatcher)
+            if not finded:
+                dispatcher.utter_message("Inserire Destro o Sinistro")
+                return {"preferred_foot": None}
+            else:
+                return {"preferred_foot": finded}
 
 class GetBPlayer(Action):
     def name(self) -> Text:
@@ -150,7 +160,6 @@ class GetBPlayer(Action):
         league = tracker.get_slot('league')
         role = tracker.get_slot('role')
         preferred_foot = tracker.get_slot('preferred_foot')
-        # best_players =  df[(df['league_name'] == str(league)) & (df['player_positions'] == str(role)) & (df['preferred_foot'] == str(preferred_foot))] 
         best_players = df[
             (df['league_name'].str.contains(league, case=False, na=False)) &
             (df['player_positions'].str.contains(role, case=False, na=False)) &
@@ -161,22 +170,20 @@ class GetBPlayer(Action):
             dispatcher.utter_message("Non ci sono calciatori che rispettano queste condizioni!")
         else:
             best_player = best_players.iloc[0]
-            response = f"Il miglior giocatore è: {best_player['short_name']}, che gioca in {best_player['league_name']} come {best_player['player_positions']} con piede preferito {best_player['preferred_foot']} con overall {best_player['overall']}."
-            # response = f"Il miglior giocatore è :\n" + "\n".join([f"- {info['league_name']} : {info['long_name']}" for info in best_players]) 
+            response = (f"Il miglior giocatore è: {best_player['short_name']}, "
+                        f"che gioca in {best_player['league_name']} come {best_player['player_positions']},"
+                        f"con piede preferito {best_player['preferred_foot']} e overall {best_player['overall']}.")
             dispatcher.utter_message(text=response)
-        return [
-            SlotSet("league", None),
-            SlotSet("role", None),
-            SlotSet("preferred_foot", None),
-            SlotSet("requested_slot", None) 
-        ]
+        return []
 
-class ActionHelloWorld(Action):
-    def name(self) -> Text:
-        return "action_hello_world"
+class ResetSlot(Action):
 
-    def run(self, dispatcher: CollectingDispatcher,
+    def name(self):
+        return "action_reset_slot"
+
+    def run(self,
+            dispatcher: CollectingDispatcher,
             tracker: Tracker,
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
-        dispatcher.utter_message(text="Hello World!")
-        return []
+        dispatcher.utter_message(text="Ora puoi chiedermi qualcos'altro!")
+        return [AllSlotsReset()]

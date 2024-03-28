@@ -133,18 +133,6 @@ nlu:
     - Dammi informazioni sul calciatore più forte.
     - Chi è il numero uno secondo le statistiche?
     - Vorrei sapere chi è il re del calcio.
-    - Qual è il giocatore più votato nel dataset?
-    - Chi è il campione indiscusso del calcio?
-    - Dimmi chi è il miglior calciatore di sempre.
-    - Vorrei conoscere il calciatore più apprezzato.
-    - Chi è il leader del calcio mondiale?
-    - Dimmi chi è il giocatore più quotato.
-    - Qual è il nome del calciatore più influente?
-    - Chi è il giocatore più rinomato?
-    - Vorrei sapere chi è il miglior giocatore valutato.
-    - Chi è considerato il migliore nella storia del calcio?
-    - Dimmi chi è il giocatore più ammirato.
-    - Qual è il calciatore più stimato nel dataset?
 
 
 - intent: find_team_intent
@@ -183,3 +171,15 @@ nlu:
     - Formazione per l'[AS Monaco](team)
     - Storia dell'[Arsenal](team)
 
+- intent: stop_intent
+  examples: |
+    - Fermati
+    - Basta
+    - Fermo
+    - Alt
+    - Fine
+    - Stop
+    - Chiudi
+    - Sospendi
+    - Pausa
+    - Smetti

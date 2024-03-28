@@ -49,3 +49,9 @@ stories:
     - active_loop: null
     - action: utter_submit
     - action: get_bplayer
+    - action: action_reset_slot
+
+- story: Abort story 
+  steps:
+  - intent: stop_intent
+  - action: action_reset_slot

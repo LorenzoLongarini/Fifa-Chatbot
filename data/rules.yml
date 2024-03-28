@@ -28,23 +28,14 @@ rules:
     - active_loop: null
     - action: utter_submit
     - action: get_bplayer
+    - action: action_reset_slot
 
-# - rule: Interruzione best player form
-#   condition:
-#   - active_loop: bplayer_form
-#   steps:
-#   - intent: bot_challenge
-#   - action: utter_iamabot
-#   - action: bplayer_form
-#   - active_loop: bplayer_form 
-
-# - rule: Submit form
-#   condition:
-#   - active_loop: bplayer_form
-#   steps:
-#   - action: bplayer_form
-#   - active_loop: null
-#   - slot_was_set:
-#     - requested_slot: null
-#   - action: get_bplayer
-  # - action: utter_slots_values
+- rule: Interrupt best player form
+  condition:
+  - active_loop: bplayer_form
+  steps:
+  - intent: stop_intent
+  - active_loop: null 
+  - slot_was_set:
+      - requested_slot: null
+  - action: action_reset_slot

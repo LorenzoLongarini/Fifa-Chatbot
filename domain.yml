@@ -10,6 +10,7 @@ intents:
   - bot_challenge
   - find_team_intent
   - find_best_player 
+  - stop_intent
 
 actions:
 - find_team_action
@@ -19,6 +20,7 @@ actions:
 - utter_ask_preferred_foot
 - utter_submit
 - get_bplayer
+- action_reset_slot
 
 responses:
   utter_greet:
@@ -47,16 +49,17 @@ responses:
   - text: "You have a team!"
 
   utter_ask_role:
-    - text: "Qual è il ruolo del calciatore?"
+    - text: "Qual è il ruolo del calciatore? - Inserisci skip per saltare la selezione"
 
   utter_ask_league:
-    - text: "In quale campionato gioca?"
+    - text: "In quale campionato gioca? - Inserisci skip per saltare la selezione"
 
   utter_ask_preferred_foot:
-    - text: "Qual è il piede preferito del calciatore?"
+    - text: "Qual è il piede preferito del calciatore? - Inserisci skip per saltare la selezione"
 
   utter_submit:
     - text: "Ok hai inserito i dati correttamente!"
+
 
 session_config:
   session_expiration_time: 60
