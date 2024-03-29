@@ -162,5 +162,5 @@ cython_debug/
 dataset/*
 !dataset/.gitkeep
 
-.rasa/cache/*
+.rasa/*
 models/*

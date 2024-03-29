@@ -8,7 +8,7 @@ assistant_id: 20240321-151334-muted-van
 
 # Configuration for Rasa NLU.
 # https://rasa.com/docs/rasa/nlu/components/
-language: en
+language: it
 
 pipeline: 
 # # No configuration for the NLU pipeline was provided. The following default pipeline was used to train your model.
@@ -41,10 +41,12 @@ policies:
 # # See https://rasa.com/docs/rasa/policies for more information.
   - name: MemoizationPolicy
   - name: RulePolicy
-  - name: UnexpecTEDIntentPolicy
-    max_history: 5
-    epochs: 100
   - name: TEDPolicy
     max_history: 5
     epochs: 100
     constrain_similarities: true
+  - name: UnexpecTEDIntentPolicy
+    max_history: 5
+    epochs: 100
+ 
+  

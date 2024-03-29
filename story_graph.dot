@@ -1,0 +1,23 @@
+digraph  {
+0 [class="start active", fillcolor=green, fontsize=12, label=START, style=filled];
+"-1" [class=end, fillcolor=red, fontsize=12, label=END, style=filled];
+1 [class=active, fontsize=12, label=action_session_start];
+2 [class=active, fontsize=12, label=bplayer_form];
+3 [class=active, fontsize=12, label=utter_ask_role];
+4 [class=active, fontsize=12, label=action_unlikely_intent];
+5 [class=active, fontsize=12, label=action_deactivate_loop];
+6 [class=active, fontsize=12, label=action_reset_slot];
+7 [class="intent dashed active", label="  ?  ", shape=rect];
+8 [class="intent active", fillcolor=lightblue, label="/find_best_player", shape=rect, style=filled];
+9 [class="intent active", fillcolor=lightblue, label="/stop_intent", shape=rect, style=filled];
+0 -> "-1"  [class="", key=NONE, label=""];
+0 -> 1  [class=active, key=NONE, label=""];
+1 -> 8  [class=active, key=0];
+2 -> 3  [class=active, key=NONE, label=""];
+3 -> 9  [class=active, key=0];
+4 -> 5  [class=active, key=NONE, label=""];
+5 -> 6  [class=active, key=NONE, label=""];
+6 -> 7  [class=active, key=NONE, label=""];
+8 -> 2  [class=active, key=0];
+9 -> 4  [class=active, key=0];
+}

@@ -1,5 +1,4 @@
 version: "3.1"
-
 nlu:
 - intent: greet
   examples: |
@@ -16,7 +15,6 @@ nlu:
     - goodmorning
     - goodevening
     - good afternoon
-
 - intent: goodbye
   examples: |
     - cu
@@ -29,7 +27,6 @@ nlu:
     - see you around
     - bye bye
     - see you later
-
 - intent: affirm
   examples: |
     - yes
@@ -38,7 +35,6 @@ nlu:
     - of course
     - that sounds good
     - correct
-
 - intent: deny
   examples: |
     - no
@@ -48,7 +44,6 @@ nlu:
     - don't like that
     - no way
     - not really
-
 - intent: mood_great
   examples: |
     - perfect
@@ -65,7 +60,6 @@ nlu:
     - so so perfect
     - so good
     - so perfect
-
 - intent: mood_unhappy
   examples: |
     - my day was horrible
@@ -82,47 +76,24 @@ nlu:
     - extremly sad
     - so saad
     - so sad
-
 - intent: bot_challenge
   examples: |
     - are you a bot?
     - are you a human?
     - am I talking to a bot?
     - am I talking to a human?
-  
-# - intent: find_player_intent
-#   examples: |
-#     - dammi informazioni su [Lionel Messi](player_name)
-#     - cosa puoi dirmi su [Cristiano Ronaldo](player_name)?
-#     - vorrei sapere qualcosa riguardo [Neymar](player_name)
-#     - chi è [Kylian Mbappé](player_name)?
-#     - dimmi di [Kevin De Bruyne](player_name)
-#     - cosa sai di [Virgil van Dijk](player_name)?
-#     - mi interessa sapere di [Robert Lewandowski](player_name)
-#     - fammi conoscere [Mohamed Salah](player_name)
-#     - puoi parlarmi di [Erling Haaland](player_name)?
-#     - che tipo di giocatore è [Jadon Sancho](player_name)?
-#     - quali informazioni hai su [Harry Kane](player_name)?
-#     - cosa posso sapere su [Paulo Dybala](player_name)?
-#     - dimmi di [Sergio Ramos](player_name)
-#     - vorrei informazioni su [Alisson Becker](player_name)
-#     - cosa sai su [Trent Alexander-Arnold](player_name)?
-#     - puoi parlarmi di [Marc-André ter Stegen](player_name)?
-#     - qualcosa su [Raheem Sterling](player_name)?
-#     - fammi sapere di [Kalidou Koulibaly](player_name)
-#     - cosa puoi dirmi su [Giorgio Chiellini](player_name)?
-#     - dimmi di [Bruno Fernandes](player_name)
-#     - cosa sai su [Romelu Lukaku](player_name)?
-#     - parlami di [Eden Hazard](player_name)
-#     - quali sono le caratteristiche di [Phil Foden](player_name)?
-#     - dimmi qualcosa su [Mason Mount](player_name)
-#     - fammi sapere di [Frenkie de Jong](player_name)
-#     - cosa posso sapere su [Matthijs de Ligt](player_name)?
-#     - dammi informazioni riguardanti [Jorginho](player_name)
-#     - che tipo di giocatore è [Son Heung-min](player_name)?
-#     - cosa sai di [Luka Modric](player_name)?
-#     - dimmi qualcosa su [Zlatan Ibrahimović](player_name)?)
-
+- intent: find_best_player
+  examples: |
+    - Chi è il miglior calciatore?
+    - Dimmi il migliore giocatore di tutti i tempi.
+    - Qual è il numero uno nel mondo del calcio?
+    - Vorrei conoscere il calciatore più talentuoso.
+    - Chi è considerato il miglior giocatore di sempre?
+    - Dammi informazioni sul calciatore più forte.
+    - Chi è il numero uno secondo le statistiche?
+    - Vorrei sapere chi è il re del calcio.
+    - miglio
+    - qual è il miglior giocatore di sempre?
 - intent: find_team_intent
   examples: |
     - Vorrei informazioni su [Inter](team)
@@ -158,3 +129,16 @@ nlu:
     - Rosa della squadra del [FC Porto](team)
     - Formazione per l'[AS Monaco](team)
     - Storia dell'[Arsenal](team)
+- intent: stop_intent
+  examples: |
+    - Fermati
+    - Basta
+    - Fermo
+    - Alt
+    - Fine
+    - Stop
+    - Chiudi
+    - Sospendi
+    - Pausa
+    - Smetti
+    - stop
