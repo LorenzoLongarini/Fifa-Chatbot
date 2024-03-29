@@ -29,7 +29,6 @@ stories:
   - intent: deny
   - action: utter_goodbye
 
-
 - story: search players by team
   steps:
   - intent: find_team_intent
@@ -51,28 +50,11 @@ stories:
     - action: get_bplayer
     - action: action_reset_slot
 
-# - story: Abort story 
-#   steps:
-#   - intent: find_best_player
-#   - action: bplayer_form
-#   - active_loop: bplayer_form
-#   - intent: stop_intent
-#   - action: action_deactivate_loop
-#   - active_loop: null
-#   - action: action_reset_slot
-
-- story: Abort story 
+- story: dectivate form
   steps:
-  - intent: find_best_player
-  - action: bplayer_form
-  - action: utter_ask_role
   - intent: stop_intent
-  - slot_was_set:
-    - team: stop
   - action: action_deactivate_loop
   - active_loop: null
   - slot_was_set:
     - requested_slot: null
   - action: action_reset_slot
-  # - slot_was_set:
-  #   - team: miglio

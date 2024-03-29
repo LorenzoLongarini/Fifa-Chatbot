@@ -93,6 +93,7 @@ nlu:
     - Chi è il numero uno secondo le statistiche?
     - Vorrei sapere chi è il re del calcio.
     - miglio
+    - qual è il miglior giocatore di sempre?
 - intent: find_team_intent
   examples: |
     - Vorrei informazioni su [Inter](team)

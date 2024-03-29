@@ -54,7 +54,6 @@ def find_values(input, search, dispatcher):
     matches = process.extract(str(input), df[search].unique(), limit= 5)
     print(matches)
     if len(matches) == 0:     
-        dispatcher.utter_message(text='La squadra inserita non esiste')
         return []
     else:
         best_match = matches[0]
@@ -102,7 +101,7 @@ class ValidateSearchBPlayerForm(FormValidationAction):
             return {"role": ''}
         else:
             finded = find_values(slot_value, search='player_positions', dispatcher = dispatcher)
-            if not finded:
+            if len(finded) == 0:
                 dispatcher.utter_message("Non ho trovato questo ruolo")
                 return {"role": None}
             else:
@@ -122,7 +121,7 @@ class ValidateSearchBPlayerForm(FormValidationAction):
             return {"league": ''}
         else:
             finded = find_values(slot_value, search='league_name', dispatcher = dispatcher)
-            if not finded:
+            if len(finded) == 0:
                 dispatcher.utter_message("Non ho trovato un club con questo nome")
                 return {"league": None}
             else:
@@ -141,7 +140,7 @@ class ValidateSearchBPlayerForm(FormValidationAction):
             return {"preferred_foot": ''}
         else:
             finded = find_values(slot_value, search='preferred_foot', dispatcher = dispatcher)
-            if not finded:
+            if len(finded) == 0:
                 dispatcher.utter_message("Inserire Destro o Sinistro")
                 return {"preferred_foot": None}
             else:

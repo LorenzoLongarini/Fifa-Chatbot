@@ -12,22 +12,9 @@ rules:
   - intent: bot_challenge
   - action: utter_iamabot
 
-- rule: Activate form find bplayer
-  steps:
-    - intent: find_best_player
-    - action: bplayer_form
-    - active_loop: bplayer_form
-
-# - rule: Interrupt best player form
-#   condition:
-#   - active_loop: bplayer_form
+# - rule: Activate form find bplayer
 #   steps:
-#   - intent: stop_intent
-#   - action: bplayer_form
-#   - active_loop: null
-#   - slot_was_set:
-#     - requested_slot: null
-#   - active_loop: null 
-  # - slot_was_set:
-  #     - requested_slot: null
-  # - action: action_reset_slot
+#     - intent: find_best_player
+#     - action: bplayer_form
+#     - active_loop: bplayer_form
+
