@@ -3,13 +3,16 @@ intents:
 - affirm
 - bot_challenge
 - deny
-- find_best_player
+- find_best_player:
+    use_entities: []
 - find_team_intent
 - goodbye
 - greet
 - mood_great
 - mood_unhappy
-- stop_intent
+- stop_intent:
+    use_entities: []
+- continue_intent
 actions:
 - action_reset_slot
 - utter_ask_role
@@ -18,7 +21,9 @@ actions:
 - utter_ask_league
 - utter_ask_preferred_foot
 - utter_submit
+- utter_iamabot
 - get_bplayer
+- stop_get_bplayer_form
 responses:
   utter_greet:
   - text: Hey! How are you?
@@ -45,6 +50,8 @@ responses:
   - text: Qual è il piede preferito del calciatore? - Inserisci skip per saltare la selezione
   utter_submit:
   - text: Ok hai inserito i dati correttamente!
+  utter_ask_continue:
+  - text: Sei sicuro di voler interrompere?
 session_config:
   session_expiration_time: 60
   carry_over_slots_to_new_session: true
@@ -85,6 +92,8 @@ slots:
         requested_slot: preferred_foot
 forms:
   bplayer_form:
+    ignored_intents:
+    - stop_intent
     required_slots:
     - role
     - league

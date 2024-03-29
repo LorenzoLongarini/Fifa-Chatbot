@@ -50,11 +50,16 @@ stories:
     - action: get_bplayer
     - action: action_reset_slot
 
-- story: dectivate form
-  steps:
-  - intent: stop_intent
-  - action: action_deactivate_loop
-  - active_loop: null
-  - slot_was_set:
-    - requested_slot: null
-  - action: action_reset_slot
+# - story: dectivate form
+#   steps:
+#   - intent: find_best_player
+#   - action: bplayer_form
+#   - active_loop: bplayer_form
+#   - intent: stop_intent
+#   - action: utter_ask_continue
+#   - or:
+#     - intent: stop_intent
+#     - intent: continue_intent
+#   - action: action_deactivate_loop
+#   - active_loop: null
+#   - action: action_reset_slot
