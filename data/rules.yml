@@ -12,9 +12,24 @@ rules:
   - intent: bot_challenge
   - action: utter_iamabot
 
-# - rule: Activate form find bplayer
-#   steps:
-#     - intent: find_best_player
-#     - action: bplayer_form
-#     - active_loop: bplayer_form
+- rule: Activate form find bplayer
+  steps:
+    - intent: find_best_player
+    - action: bplayer_form
+    - active_loop: bplayer_form
 
+- rule: Stop Form
+  steps:
+  - intent: stop_intent
+  - action: stop_get_bplayer_form
+  - action: action_deactivate_loop #deactivates form
+  - active_loop: null #kills loop
+
+# - rule: Abort form find bplayer
+#   condition:
+#   - active_loop: bplayer_form
+#   steps:
+#   - intent: chitchat
+#   - action: utter_iamabot
+#   - action: bplayer_form
+#   - active_loop: bplayer_form

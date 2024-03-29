@@ -50,6 +50,12 @@ columns= ['player_id',
 'defending',
 'physic']
 
+modules = [
+    '4-3-3',
+    '4-4-2',
+    '3-5-2'
+]
+
 def find_values(input, search, dispatcher):
     matches = process.extract(str(input), df[search].unique(), limit= 5)
     print(matches)
@@ -97,7 +103,7 @@ class ValidateSearchBPlayerForm(FormValidationAction):
     ) -> Dict[Text, Any]:
         
         print(slot_value)
-        if slot_value == 'skip':
+        if slot_value == 'prosegui':
             return {"role": ''}
         else:
             finded = find_values(slot_value, search='player_positions', dispatcher = dispatcher)
@@ -117,7 +123,7 @@ class ValidateSearchBPlayerForm(FormValidationAction):
     ) -> Dict[Text, Any]:
         
         print(slot_value)
-        if slot_value == 'skip':
+        if slot_value == 'prosegui':
             return {"league": ''}
         else:
             finded = find_values(slot_value, search='league_name', dispatcher = dispatcher)
@@ -136,7 +142,7 @@ class ValidateSearchBPlayerForm(FormValidationAction):
     ) -> Dict[Text, Any]:
         
         print(slot_value)
-        if slot_value == 'skip':
+        if slot_value == 'prosegui':
             return {"preferred_foot": ''}
         else:
             finded = find_values(slot_value, search='preferred_foot', dispatcher = dispatcher)
@@ -146,12 +152,30 @@ class ValidateSearchBPlayerForm(FormValidationAction):
             else:
                 return {"preferred_foot": finded}
 
+class StopGetBPlayerForm(Action):
+    def name(self) -> Text:
+        return "stop_get_bplayer_form"
+
+    def run(
+        self,
+        dispatcher: CollectingDispatcher,
+        tracker: Tracker,
+        domain: Dict[Text, Any],
+    ) -> List[Dict[Text, Any]]:
+
+    	#Utters message to inform user form has been cancelled
+        dispatcher.utter_message(text="Hai interroto la ricerca!")
+
+        #Clears slots
+        # return[SlotSet(SlotSet("company_location", None),SlotSet("company_name", None),SlotSet("company_source", None)]
+        return[AllSlotsReset()]
+
 class GetBPlayer(Action):
     def name(self) -> Text:
         return "get_bplayer"
 
-    def run(self,
-            #slot_value: Any,
+    def run(
+            self,
             dispatcher: CollectingDispatcher,
             tracker: Tracker,
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
@@ -174,6 +198,23 @@ class GetBPlayer(Action):
                         f"con piede preferito {best_player['preferred_foot']} e overall {best_player['overall']}.")
             dispatcher.utter_message(text=response)
         return []
+    
+# class GetModule(Action):
+#     def name(self) -> Text:
+#         return "get_module"
+
+#     def run(self,
+#             slot_value: Any,
+#             dispatcher: CollectingDispatcher,
+#             tracker: Tracker,
+#             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+#         res='Seleziona uno dei seguenti moduli: \n'
+#         buttons=[]
+#         for module in modules:
+#             res=res+f' - {module[0]}\n'
+#             buttons.append({"module": module[0], "payload": f'/viewBrandProduct{{"brand":"{elem[0]}"}}'})
+#         dispatcher.utter_button_message(brd,buttons)
+
 
 class ResetSlot(Action):
 
