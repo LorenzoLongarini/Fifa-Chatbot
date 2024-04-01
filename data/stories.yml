@@ -46,20 +46,24 @@ stories:
     - slot_was_set:
       - requested_slot: preferred_foot
     - active_loop: null
-    - action: utter_submit
     - action: get_bplayer
     - action: action_reset_slot
 
-# - story: dectivate form
-#   steps:
-#   - intent: find_best_player
-#   - action: bplayer_form
-#   - active_loop: bplayer_form
-#   - intent: stop_intent
-#   - action: utter_ask_continue
-#   - or:
-#     - intent: stop_intent
-#     - intent: continue_intent
-#   - action: action_deactivate_loop
-#   - active_loop: null
-#   - action: action_reset_slot
+- story: create new team
+  steps:
+    - intent: create_team_intent
+    - action: get_module
+    - intent: select_module
+    - action: utter_create_together
+    - action: create_team_form
+    - active_loop: create_team_form
+    - slot_was_set:
+      - requested_slot: age
+    - slot_was_set:
+      - requested_slot: nationality
+    - slot_was_set:
+      - requested_slot: characteristic
+    - active_loop: null
+    - action: utter_submit
+    - action: get_team 
+    - action: action_reset_slot

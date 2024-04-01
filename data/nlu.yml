@@ -142,31 +142,33 @@ nlu:
     - Pausa
     - Smetti
     - stop
-- intent: continue_intent
+- intent: stop_intent_create
   examples: |
-    - Si
-    - Certo
-    - Va bene
-    - OK
-    - Assolutamente si
-    - certamente
-    - Ovvio
-    - ovviamente
-    - Palese
-    - palesemente
-    - lapalissiano
-  # - intent: create_team_intent
-  #   examples: |
-  #   - Crea un nuovo team in FIFA
-  #   - Voglio creare una squadra
-  #   - Crea una squadra
-  #   - Costruisci una squadra
-  #   - Posso creare un team personalizzato?
-  #   - Qual è il modo migliore per creare una squadra vincente in FIFA?
-  #   - Come posso creare una squadra competitiva in FIFA Ultimate Team?
-  #   - Voglio creare una squadra di campioni in FIFA
-  #   - Vorrei creare un team con i migliori giocatori della storia in FIFA
-  #   - Voglio creare una squadra con una forte difesa in FIFA
-  #   - Come posso personalizzare la maglia e il logo del mio team in FIFA?
-  #   - Vorrei creare una squadra con una grande attacco in FIFA
-  #   - Cosa devo fare per creare un team di successo in FIFA Ultimate Team?
+    - Fermati
+    - Basta
+    - Fermo
+    - Alt
+    - Fine
+    - Stop
+    - Chiudi
+    - Sospendi
+    - Pausa
+    - Smetti
+    - stop
+- intent: create_team_intent
+  examples: |
+    - Crea un nuovo team in FIFA
+    - Voglio creare una squadra
+    - Crea una squadra
+    - Costruisci una squadra
+    - Posso creare un team personalizzato?
+    - Crea una nuova squadra in FIFA
+    - Desidero creare un team
+    - Vorrei formare una squadra
+    - Posso creare una nuova squadra?
+    - Costruisci un team personalizzato
+    - Voglio creare il mio team
+    - Come posso creare una squadra?
+    - Ho intenzione di creare un team di calcio
+    - Posso creare una squadra da zero?
+    - Vorrei creare una nuova formazione di squadra

@@ -17,19 +17,26 @@ rules:
     - intent: find_best_player
     - action: bplayer_form
     - active_loop: bplayer_form
+    
 
 - rule: Stop Form
   steps:
   - intent: stop_intent
   - action: stop_get_bplayer_form
-  - action: action_deactivate_loop #deactivates form
-  - active_loop: null #kills loop
+  - action: action_deactivate_loop 
+  - active_loop: null 
+  
 
-# - rule: Abort form find bplayer
-#   condition:
-#   - active_loop: bplayer_form
-#   steps:
-#   - intent: chitchat
-#   - action: utter_iamabot
-#   - action: bplayer_form
-#   - active_loop: bplayer_form
+- rule: Activate form create team
+  steps:
+    - intent: select_module
+    - action: utter_create_together
+    - action: create_team_form
+    - active_loop: create_team_form
+
+- rule: Stop form create team
+  steps:
+  - intent: stop_intent_create
+  - action: stop_create_team_form
+  - action: action_deactivate_loop 
+  - active_loop: null 

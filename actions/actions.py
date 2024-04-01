@@ -56,6 +56,11 @@ modules = [
     '3-5-2'
 ]
 
+char = [
+    "overall",
+    "potential"
+]
+
 def find_values(input, search, dispatcher):
     matches = process.extract(str(input), df[search].unique(), limit= 5)
     print(matches)
@@ -103,7 +108,7 @@ class ValidateSearchBPlayerForm(FormValidationAction):
     ) -> Dict[Text, Any]:
         
         print(slot_value)
-        if slot_value == 'prosegui':
+        if slot_value == 'prosegui' or slot_value == '':
             return {"role": ''}
         else:
             finded = find_values(slot_value, search='player_positions', dispatcher = dispatcher)
@@ -123,7 +128,7 @@ class ValidateSearchBPlayerForm(FormValidationAction):
     ) -> Dict[Text, Any]:
         
         print(slot_value)
-        if slot_value == 'prosegui':
+        if slot_value == 'prosegui' or slot_value == '':
             return {"league": ''}
         else:
             finded = find_values(slot_value, search='league_name', dispatcher = dispatcher)
@@ -142,7 +147,7 @@ class ValidateSearchBPlayerForm(FormValidationAction):
     ) -> Dict[Text, Any]:
         
         print(slot_value)
-        if slot_value == 'prosegui':
+        if slot_value == 'prosegui' or slot_value == '':
             return {"preferred_foot": ''}
         else:
             finded = find_values(slot_value, search='preferred_foot', dispatcher = dispatcher)
@@ -167,7 +172,6 @@ class StopGetBPlayerForm(Action):
         dispatcher.utter_message(text="Hai interroto la ricerca!")
 
         #Clears slots
-        # return[SlotSet(SlotSet("company_location", None),SlotSet("company_name", None),SlotSet("company_source", None)]
         return[AllSlotsReset()]
 
 class GetBPlayer(Action):
@@ -199,22 +203,171 @@ class GetBPlayer(Action):
             dispatcher.utter_message(text=response)
         return []
     
-# class GetModule(Action):
-#     def name(self) -> Text:
-#         return "get_module"
+class GetModule(Action):
+    def name(self) -> Text:
+        return "get_module"
 
-#     def run(self,
-#             slot_value: Any,
-#             dispatcher: CollectingDispatcher,
-#             tracker: Tracker,
-#             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
-#         res='Seleziona uno dei seguenti moduli: \n'
-#         buttons=[]
-#         for module in modules:
-#             res=res+f' - {module[0]}\n'
-#             buttons.append({"module": module[0], "payload": f'/viewBrandProduct{{"brand":"{elem[0]}"}}'})
-#         dispatcher.utter_button_message(brd,buttons)
+    def run(
+            self,
+            dispatcher: CollectingDispatcher,
+            tracker: Tracker,
+            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+        res='Seleziona uno dei seguenti moduli: \n'
+        buttons=[]
+        for module in modules:
+            res += f' - {module}\n'
+            buttons.append({
+                "module": module,
+                "payload": f'/select_module{{"module":"{module}"}}'
+                })
+            
+        dispatcher.utter_button_message(text = res, buttons = buttons)
+        print(res, buttons)
+        return []
+    
 
+class ValidateCreateTeamForm(FormValidationAction):
+    def name(self) -> Text:
+        return "validate_create_team_form"
+
+
+    def validate_age(
+        self,
+        slot_value: Any,
+        dispatcher: CollectingDispatcher,
+        tracker: Tracker,
+        domain: DomainDict,
+    ) -> Dict[Text, Any]:
+        
+        print(slot_value)
+        if slot_value == 'prosegui' or slot_value == '':
+            return {"age": ''}
+        elif not slot_value.isdigit():
+            dispatcher.utter_message("Inserisci un valore numerico")
+        else:
+            return {"age": slot_value}
+    
+    def validate_nationality(
+        self,
+        slot_value: Any,
+        dispatcher: CollectingDispatcher,
+        tracker: Tracker,
+        domain: DomainDict,
+    ) -> Dict[Text, Any]:
+        
+        print(slot_value)
+        if slot_value == 'prosegui' or slot_value == '':
+            return {"nationality": ''}
+        else:
+            finded = find_values(slot_value, search='nationality_name', dispatcher = dispatcher)
+            if len(finded) == 0:
+                dispatcher.utter_message("Non ho trovato questa nazionalità")
+                return {"nationality": None}
+            else:
+                return {"nationality": finded}
+
+    def validate_characteristic(
+        self,
+        slot_value: Any,
+        dispatcher: CollectingDispatcher,
+        tracker: Tracker,
+        domain: DomainDict,
+    ) -> Dict[Text, Any]:
+        
+        print(slot_value)
+        if slot_value == 'prosegui' or slot_value == '':
+            return {"characteristic": ''}
+        else:
+            finded = process.extract(str(slot_value), char, limit= 1)
+            print(finded)
+            if finded[0][1] > 80:
+                return {"characteristic": finded[0]}
+            else:
+                dispatcher.utter_message("Non ho capito, devi inserire \'Overall\' oppure \'Potential\'")
+                return {"characteristic": None}
+
+class StopCreateTeamForm(Action):
+    def name(self) -> Text:
+        return "stop_create_team_form"
+
+    def run(
+        self,
+        dispatcher: CollectingDispatcher,
+        tracker: Tracker,
+        domain: Dict[Text, Any],
+    ) -> List[Dict[Text, Any]]:
+
+    	#Utters message to inform user form has been cancelled
+        dispatcher.utter_message(text="Hai interroto la ricerca!")
+
+        #Clears slots
+        return[AllSlotsReset()]
+
+def find_team_players(player_positions, age, nationality, characteristic, head):
+    best_players = df[
+            (df['player_positions'].str.contains(player_positions, case=False, na=False)) &
+            (df['age'].str.contains(age, case=False, na=False)) &
+            (df['nationality'].str.contains(nationality, case=False, na=False)) &
+            (df['characteristic'].str.contains(characteristic, case=False, na=False))
+        ].sort_values(by='overall', ascending=False).head(head)
+    return best_players
+
+
+class GetTeam(Action):
+    def name(self) -> Text:
+        return "get_team"
+
+    def run(
+            self,
+            dispatcher: CollectingDispatcher,
+            tracker: Tracker,
+            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+        module = tracker.get_slot('module')
+        print("ciao",module)
+        age = tracker.get_slot('age')
+        nationality = tracker.get_slot('nationality')
+        characteristic = tracker.get_slot('characteristic')
+        if module == modules[0]:
+            goalkeeper = find_team_players(player_positions = 'Portiere', age = age, nationality = nationality, characteristic = characteristic, head = 1)
+            defenders = find_team_players(player_positions = 'Difensore', age = age, nationality = nationality, characteristic = characteristic, head = 4)
+            midfielders = find_team_players(player_positions = 'Centrocampista', age = age, nationality = nationality, characteristic = characteristic, head = 3)
+            strikers = find_team_players(player_positions = 'Attaccante', age = age, nationality = nationality, characteristic = characteristic, head = 3)
+            if len(goalkeeper == 0) or len(defenders < 4) or len(midfielders < 3) or len(strikers < 3):
+                dispatcher.utter_message("Non è possibile creare una squadra rispettando queste condizioni!")
+            else:
+                response = f"Portiere: \n{goalkeeper['long_name']}:{goalkeeper['age']}, {goalkeeper['nationality']}, {goalkeeper['characteristic']}"
+                response += "Difensori: \n" + f"\n".join([f"{defender['long_name']}:{defender['age']}, {defender['nationality']}, {defender['characteristic']}" for defender in defenders]) 
+                response += "Centrocampisti: \n" + f"\n".join([f"{midfielder['long_name']}:{midfielder['age']}, {midfielder['nationality']}, {midfielder['characteristic']}" for midfielder in midfielders]) 
+                response += "Attaccanti: \n" + f"\n".join([f"{striker['long_name']}:{striker['age']}, {striker['nationality']}, {striker['characteristic']}" for striker in strikers]) 
+                dispatcher.utter_message(text=response)
+
+        elif module == modules[1]:
+            goalkeeper = find_team_players(player_positions = 'Portiere', age = age, nationality = nationality, characteristic = characteristic, head = 1)
+            defenders = find_team_players(player_positions = 'Difensore', age = age, nationality = nationality, characteristic = characteristic, head = 4)
+            midfielders = find_team_players(player_positions = 'Centrocampista', age = age, nationality = nationality, characteristic = characteristic, head = 4)
+            strikers = find_team_players(player_positions = 'Attaccante', age = age, nationality = nationality, characteristic = characteristic, head = 2)
+            if len(goalkeeper == 0) or len(defenders < 4) or len(midfielders < 4) or len(strikers < 2):
+                dispatcher.utter_message("Non è possibile creare una squadra rispettando queste condizioni!")
+            else:
+                response = f"Portiere: \n{goalkeeper['long_name']}:{goalkeeper['age']}, {goalkeeper['nationality']}, {goalkeeper['characteristic']}"
+                response += "Difensori: \n" + f"\n".join([f"{defender['long_name']}:{defender['age']}, {defender['nationality']}, {defender['characteristic']}" for defender in defenders]) 
+                response += "Centrocampisti: \n" + f"\n".join([f"{midfielder['long_name']}:{midfielder['age']}, {midfielder['nationality']}, {midfielder['characteristic']}" for midfielder in midfielders]) 
+                response += "Attaccanti: \n" + f"\n".join([f"{striker['long_name']}:{striker['age']}, {striker['nationality']}, {striker['characteristic']}" for striker in strikers]) 
+                dispatcher.utter_message(text=response)
+        elif module == modules[2]:
+            goalkeeper = find_team_players(player_positions = 'Portiere', age = age, nationality = nationality, characteristic = characteristic, head = 1)
+            defenders = find_team_players(player_positions = 'Difensore', age = age, nationality = nationality, characteristic = characteristic, head = 3)
+            midfielders = find_team_players(player_positions = 'Centrocampista', age = age, nationality = nationality, characteristic = characteristic, head = 5)
+            strikers = find_team_players(player_positions = 'Attaccante', age = age, nationality = nationality, characteristic = characteristic, head = 2)
+            if len(goalkeeper == 0) or len(defenders < 3) or len(midfielders < 5) or len(strikers < 2):
+                dispatcher.utter_message("Non è possibile creare una squadra rispettando queste condizioni!")
+            else:
+                response = f"Portiere: \n{goalkeeper['long_name']}:{goalkeeper['age']}, {goalkeeper['nationality']}, {goalkeeper['characteristic']}"
+                response += "Difensori: \n" + f"\n".join([f"{defender['long_name']}:{defender['age']}, {defender['nationality']}, {defender['characteristic']}" for defender in defenders]) 
+                response += "Centrocampisti: \n" + f"\n".join([f"{midfielder['long_name']}:{midfielder['age']}, {midfielder['nationality']}, {midfielder['characteristic']}" for midfielder in midfielders]) 
+                response += "Attaccanti: \n" + f"\n".join([f"{striker['long_name']}:{striker['age']}, {striker['nationality']}, {striker['characteristic']}" for striker in strikers]) 
+                dispatcher.utter_message(text=response)
+        return []
 
 class ResetSlot(Action):
 
