@@ -152,23 +152,23 @@ class ValidateSearchBPlayerForm(FormValidationAction):
             else:
                 return {"preferred_foot": finded}
 
-class StopGetBPlayerForm(Action):
-    def name(self) -> Text:
-        return "stop_get_bplayer_form"
+# class StopGetBPlayerForm(Action):
+#     def name(self) -> Text:
+#         return "stop_get_bplayer_form"
 
-    def run(
-        self,
-        dispatcher: CollectingDispatcher,
-        tracker: Tracker,
-        domain: Dict[Text, Any],
-    ) -> List[Dict[Text, Any]]:
+#     def run(
+#         self,
+#         dispatcher: CollectingDispatcher,
+#         tracker: Tracker,
+#         domain: Dict[Text, Any],
+#     ) -> List[Dict[Text, Any]]:
 
-    	#Utters message to inform user form has been cancelled
-        dispatcher.utter_message(text="Hai interroto la ricerca!")
+#     	#Utters message to inform user form has been cancelled
+#         dispatcher.utter_message(text="Hai interroto la ricerca!")
 
-        #Clears slots
-        # return[SlotSet(SlotSet("company_location", None),SlotSet("company_name", None),SlotSet("company_source", None)]
-        return[AllSlotsReset()]
+#         #Clears slots
+#         # return[SlotSet(SlotSet("company_location", None),SlotSet("company_name", None),SlotSet("company_source", None)]
+#         return[AllSlotsReset()]
 
 class GetBPlayer(Action):
     def name(self) -> Text:

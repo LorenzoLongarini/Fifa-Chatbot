@@ -50,6 +50,21 @@ stories:
     - action: get_bplayer
     - action: action_reset_slot
 
+- story: stop for role
+  steps:
+    - intent: find_best_player
+    - action: bplayer_form
+    - active_loop: bplayer_form
+    - slot_was_set:
+      - requested_slot: role
+    - intent: stop_intent
+    - action: action_deactivate_loop
+    - active_loop: null
+    - slot_was_set:
+      - requested_slot: null
+    - active_loop: null
+    - action: action_reset_slot
+
 # - story: dectivate form
 #   steps:
 #   - intent: find_best_player

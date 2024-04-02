@@ -18,12 +18,12 @@ rules:
     - action: bplayer_form
     - active_loop: bplayer_form
 
-- rule: Stop Form
-  steps:
-  - intent: stop_intent
-  - action: stop_get_bplayer_form
-  - action: action_deactivate_loop #deactivates form
-  - active_loop: null #kills loop
+# - rule: Stop Form
+#   steps:
+#   - intent: stop_intent
+#   - action: stop_get_bplayer_form
+#   - action: action_deactivate_loop #deactivates form
+#   - active_loop: null #kills loop
 
 # - rule: Abort form find bplayer
 #   condition:
