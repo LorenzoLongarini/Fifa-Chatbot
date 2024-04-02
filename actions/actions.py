@@ -14,6 +14,7 @@ from rasa_sdk.executor import CollectingDispatcher
 from rasa_sdk.types import DomainDict
 from rasa_sdk.forms import FormValidationAction
 from rasa_sdk.events import SlotSet
+from rasa_sdk.events import FollowupAction
 import pandas as pd
 import sys
 from fuzzywuzzy import process
@@ -137,6 +138,8 @@ class ValidateSearchBPlayerForm(FormValidationAction):
                 return {"league": None}
             else:
                 return {"league": finded}
+                
+
 
     def validate_preferred_foot(
         self,
@@ -155,7 +158,8 @@ class ValidateSearchBPlayerForm(FormValidationAction):
                 dispatcher.utter_message("Inserire Destro o Sinistro")
                 return {"preferred_foot": None}
             else:
-                return {"preferred_foot": finded}
+                {"preferred_foot": finded}
+                return [FollowupAction("get_bplayer")]
 
 class StopGetBPlayerForm(Action):
     def name(self) -> Text:
