@@ -89,72 +89,48 @@ nlu:
     - are you a human?
     - am I talking to a bot?
     - am I talking to a human?
-  
-# - intent: find_player_intent
-#   examples: |
-#     - dammi informazioni su [Lionel Messi](player_name)
-#     - cosa puoi dirmi su [Cristiano Ronaldo](player_name)?
-#     - vorrei sapere qualcosa riguardo [Neymar](player_name)
-#     - chi è [Kylian Mbappé](player_name)?
-#     - dimmi di [Kevin De Bruyne](player_name)
-#     - cosa sai di [Virgil van Dijk](player_name)?
-#     - mi interessa sapere di [Robert Lewandowski](player_name)
-#     - fammi conoscere [Mohamed Salah](player_name)
-#     - puoi parlarmi di [Erling Haaland](player_name)?
-#     - che tipo di giocatore è [Jadon Sancho](player_name)?
-#     - quali informazioni hai su [Harry Kane](player_name)?
-#     - cosa posso sapere su [Paulo Dybala](player_name)?
-#     - dimmi di [Sergio Ramos](player_name)
-#     - vorrei informazioni su [Alisson Becker](player_name)
-#     - cosa sai su [Trent Alexander-Arnold](player_name)?
-#     - puoi parlarmi di [Marc-André ter Stegen](player_name)?
-#     - qualcosa su [Raheem Sterling](player_name)?
-#     - fammi sapere di [Kalidou Koulibaly](player_name)
-#     - cosa puoi dirmi su [Giorgio Chiellini](player_name)?
-#     - dimmi di [Bruno Fernandes](player_name)
-#     - cosa sai su [Romelu Lukaku](player_name)?
-#     - parlami di [Eden Hazard](player_name)
-#     - quali sono le caratteristiche di [Phil Foden](player_name)?
-#     - dimmi qualcosa su [Mason Mount](player_name)
-#     - fammi sapere di [Frenkie de Jong](player_name)
-#     - cosa posso sapere su [Matthijs de Ligt](player_name)?
-#     - dammi informazioni riguardanti [Jorginho](player_name)
-#     - che tipo di giocatore è [Son Heung-min](player_name)?
-#     - cosa sai di [Luka Modric](player_name)?
-#     - dimmi qualcosa su [Zlatan Ibrahimović](player_name)?)
 
-- intent: find_team_intent
+
+- intent: find_info_player_intent
   examples: |
-    - Vorrei informazioni su [Inter](team)
-    - Dati su [Lazio](team)
-    - Statistiche di [Napoli](team)
-    - Scheda tecnica del [Roma](team)
-    - Storia del [Fiorentina](team)
-    - Sono tifoso del [Genoa](team)
-    - Adoro la [Barcellona](team)
-    - Cuore [Torino](team)
-    - Da sempre per la [Cagliari](team)
-    - Un fan del [Bologna](team)
-    - Quando gioca il [Verona](team)?
-    - Chi gioca nel [Atalanta](team)?
-    - Lista giocatori del [Venezia](team)
-    - Elenco calciatori della [Salernitana](team)
-    - Rosa della squadra [Monza](team)
-    - Titolari del [Cremonese](team)
-    - Raccontami la storia del [Lecce](team)
-    - Origini del [Pisa](team)
-    - Fondazione del [Frosinone](team)
-    - Anni d'oro del [Perugia](team)
-    - Trionfi del [Cosenza](team)
-    - Raccontami di [Real Madrid](team)
-    - Informazioni su [Manchester United](team)
-    - Scheda tecnica del [Bayern Munich](team)
-    - Sono tifoso del [Paris Saint-Germain](team)
-    - Amo il [Liverpool](team)
-    - Il cuore appartiene alla [Juventus](team)
-    - Sostenitore da tempo del [Chelsea](team)
-    - Chi gioca per il [Manchester City](team)?
-    - Elenco dei giocatori per il [Borussia Dortmund](team)
-    - Rosa della squadra del [FC Porto](team)
-    - Formazione per l'[AS Monaco](team)
-    - Storia dell'[Arsenal](team)
+    - dammi informazioni su un giocatore
+    - che giocatore ti interessa?
+    - chi vuoi conoscere?
+    - vorrei sapere su qualche giocatore
+    - quali sono le statistiche di un giocatore?
+    - dimmi di più su un giocatore
+    - mi interessa sapere di un giocatore
+    - puoi parlarmi di un player?
+    - puoi dirmi qualcosa di un giocatore
+    - mi dici le caratteristiche di un giocatore
+
+- intent: view_image_intent
+  examples: |
+    - vorrei vedere
+    - voglio vedere un image
+    - fammi vedere
+    - mostrami url
+    - mostrami la foto
+    - mostrami l'immagine
+    - vorrei vedere una foto
+    - fammi vedere una foto
+    - mostrami una foto
+    - voglio vedere un immagine
+    - fammi vedere un immagine
+    - mostrami un immagine
+
+
+- intent: compare_players_intent
+  examples: |
+    - confronta questi due giocatori
+    - che giocatori vuoi confrontare?
+    - confronta due giocatori di calcio
+    - voglio paragonare due calciatori famosi
+    - quali sono le differenze tra due grandi giocatori di calcio?
+    - confronta le statistiche di due attaccanti 
+    - voglio sapere chi è migliore tra due giocatori
+    - che players vuoi confrontare?
+    - voglio confrontare due grandi nomi del calcio
+    - paragona le abilità di due players di calcio
+    - quali sono i punti di forza e di debolezza di due calciatori?
+

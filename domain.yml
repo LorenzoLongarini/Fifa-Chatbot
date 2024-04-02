@@ -8,37 +8,55 @@ intents:
   - mood_great
   - mood_unhappy
   - bot_challenge
-  - find_team_intent
+  - find_info_player_intent:
+      use_entities: []
+  - view_image_intent:
+      use_entities: []
+  - compare_players_intent:
+      use_entities: []
 
 actions:
-- find_team_action
+- action_reset_slot
+- validate_player_form
+- validate_player_image_form
+- utter_ask_player
+- utter_ask_player_image
+- get_player
+- get_player_image
+
 
 
 responses:
   utter_greet:
-  - text: "Hey! How are you?"
-
+  - text: Hey! How are you?
   utter_cheer_up:
-  - text: "Here is something to cheer you up:"
-    image: "https://i.imgur.com/nGF1K8f.jpg"
-
+  - text: 'Here is something to cheer you up:'
+    image: https://i.imgur.com/nGF1K8f.jpg
   utter_did_that_help:
-  - text: "Did that help you?"
-
+  - text: Did that help you?
   utter_happy:
-  - text: "Great, carry on!"
-
+  - text: Great, carry on!
   utter_goodbye:
-  - text: "Bye"
-
+  - text: Bye
   utter_iamabot:
-  - text: "I am a bot, powered by Rasa."
-
-  utter_name_player:
-  - text: "What is the name of the player?"
-
+  - text: I am a bot, powered by Rasa.
+  utter_ask_player:
+  - text: Qual è il nome del giocatore?
+  utter_ask_player_image:
+   - text: Qual è il nome del giocatore di cui vuoi vedere la foto?
   utter_confirm_create_team:
-  - text: "You have a team!"
+  - text: You have a team!
+  utter_ask_role:
+  - text: Qual è il ruolo del calciatore? - Inserisci skip per saltare la selezione
+  utter_ask_league:
+  - text: In quale campionato gioca? - Inserisci skip per saltare la selezione
+  utter_ask_preferred_foot:
+  - text: Qual è il piede preferito del calciatore? - Inserisci skip per saltare la selezione
+  utter_submit:
+  - text: Ok hai inserito i dati correttamente!
+  utter_ask_continue:
+  - text: Sei sicuro di voler interrompere?
+  
   
 
 session_config:
@@ -48,10 +66,75 @@ session_config:
 
 entities:
   - team
+  - role
+  - league
+  - preferred_foot
+  - player
+  - player_image
 
 slots:
   team:
     type: text
     mappings:
-      - type: from_text
+    - type: from_text
     influence_conversation: false
+  role:
+    type: text
+    influence_conversation: false
+    mappings:
+    - type: from_text
+      conditions:
+      - active_loop: bplayer_form
+        requested_slot: role
+  league:
+    type: text
+    influence_conversation: false
+    mappings:
+    - type: from_text
+      conditions:
+      - active_loop: bplayer_form
+        requested_slot: league
+  preferred_foot:
+    type: text
+    influence_conversation: false
+    mappings:
+    - type: from_text
+      conditions:
+      - active_loop: bplayer_form
+        requested_slot: preferred_foot
+  player:
+    type: text
+    influence_conversation: false
+    mappings:
+    - type: from_text
+      conditions:
+      - active_loop: player_form
+        requested_slot: player
+  player_image:
+    type: text
+    influence_conversation: false
+    mappings:
+    - type: from_text
+      conditions:
+      - active_loop: player_image_form
+        requested_slot: player_image
+
+forms:
+  bplayer_form:
+    ignored_intents:
+    - stop_intent
+    required_slots:
+    - role
+    - league
+    - preferred_foot
+  player_form:
+    ignored_intents:
+    - stop_intent
+    required_slots:
+    - player
+  player_image_form:
+    ignored_intents:
+    - stop_intent
+    required_slots:
+    - player_image
+

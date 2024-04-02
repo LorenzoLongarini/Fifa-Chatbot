@@ -29,7 +29,27 @@ stories:
   - intent: deny
   - action: utter_goodbye
 
-- story: search players by team
-  steps:
-  - intent: find_team_intent
-  - action: find_team_action
+
+# - story: find info player
+#   steps:
+#     - intent: find_info_player_intent
+#     - action: player_form
+#     - active_loop: player_form
+#     - slot_was_set:
+#       - requested_slot: player
+#     - active_loop: null
+#     - action: utter_submit
+#     - action: get_player
+#     - action: action_reset_slot
+
+# - story: view image player
+#   steps:
+#   - intent: view_image_intent
+#   - action: player_image_form
+#   - active_loop: player_image_form
+#   - slot_was_set:
+#     - requested_slot: player_image
+#   - active_loop: null
+#   - action: utter_submit
+#   - action: get_player_image
+#   - action: action_reset_slot
