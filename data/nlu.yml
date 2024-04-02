@@ -132,29 +132,29 @@ nlu:
 - intent: stop_intent
   examples: |
     - Fermati
+    - ferm
+    - basta così
+    - bast
     - Basta
     - Fermo
     - Alt
+    - alt
+    - fin
+    - end
+    - chiud
     - Fine
     - Stop
+    - stoppati
+    - finiscila
+    - chiuditi
     - Chiudi
     - Sospendi
+    - sosp
+    - sospendi
     - Pausa
     - Smetti
     - stop
-- intent: stop_intent_create
-  examples: |
-    - Fermati
-    - Basta
-    - Fermo
-    - Alt
-    - Fine
-    - Stop
-    - Chiudi
-    - Sospendi
-    - Pausa
-    - Smetti
-    - stop
+    - smettila
 - intent: create_team_intent
   examples: |
     - Crea un nuovo team in FIFA

@@ -19,12 +19,12 @@ rules:
     - active_loop: bplayer_form
     
 
-- rule: Stop Form
-  steps:
-  - intent: stop_intent
-  - action: stop_get_bplayer_form
-  - action: action_deactivate_loop 
-  - active_loop: null 
+# - rule: Stop Form
+#   steps:
+#   - intent: stop_intent
+#   - action: stop_get_bplayer_form
+#   - action: action_deactivate_loop 
+#   - active_loop: null 
   
 
 - rule: Activate form create team
@@ -34,9 +34,9 @@ rules:
     - action: create_team_form
     - active_loop: create_team_form
 
-- rule: Stop form create team
-  steps:
-  - intent: stop_intent_create
-  - action: stop_create_team_form
-  - action: action_deactivate_loop 
-  - active_loop: null 
+# - rule: Stop form create team
+#   steps:
+#   - intent: stop_intent_create
+#   - action: stop_create_team_form
+#   - action: action_deactivate_loop 
+#   - active_loop: null 

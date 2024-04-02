@@ -14,7 +14,7 @@ from rasa_sdk.executor import CollectingDispatcher
 from rasa_sdk.types import DomainDict
 from rasa_sdk.forms import FormValidationAction
 from rasa_sdk.events import SlotSet
-from rasa_sdk.events import FollowupAction
+from rasa_sdk.events import FollowupAction, Restarted
 import pandas as pd
 import sys
 from fuzzywuzzy import process
@@ -107,7 +107,10 @@ class ValidateSearchBPlayerForm(FormValidationAction):
         tracker: Tracker,
         domain: DomainDict,
     ) -> Dict[Text, Any]:
-        
+        if tracker.latest_message["intent"]["name"] == "stop_intent":
+            print(tracker.latest_message["intent"]["name"])
+            # dispatcher.utter_message(text="Hai interroto la ricerca!")
+            return [AllSlotsReset(), Restarted()]
         print(slot_value)
         if slot_value == 'prosegui' or slot_value == '':
             return {"role": ''}
@@ -127,14 +130,17 @@ class ValidateSearchBPlayerForm(FormValidationAction):
         tracker: Tracker,
         domain: DomainDict,
     ) -> Dict[Text, Any]:
-        
+        print(tracker.latest_message["intent"]["name"])
+        if tracker.latest_message["intent"]["name"] == "stop_intent":
+            # dispatcher.utter_message(text="Hai interroto la ricerca!")
+            return [AllSlotsReset(), Restarted()]
         print(slot_value)
         if slot_value == 'prosegui' or slot_value == '':
             return {"league": ''}
         else:
             finded = find_values(slot_value, search='league_name', dispatcher = dispatcher)
             if len(finded) == 0:
-                dispatcher.utter_message("Non ho trovato un club con questo nome")
+                dispatcher.utter_message("Non ho trovato una lega con questo nome")
                 return {"league": None}
             else:
                 return {"league": finded}
@@ -148,7 +154,10 @@ class ValidateSearchBPlayerForm(FormValidationAction):
         tracker: Tracker,
         domain: DomainDict,
     ) -> Dict[Text, Any]:
-        
+        print(tracker.latest_message["intent"]["name"])
+        if tracker.latest_message["intent"]["name"] == "stop_intent":
+            # dispatcher.utter_message(text="Hai interroto la ricerca!")
+            return [AllSlotsReset(), Restarted()]
         print(slot_value)
         if slot_value == 'prosegui' or slot_value == '':
             return {"preferred_foot": ''}
@@ -161,22 +170,22 @@ class ValidateSearchBPlayerForm(FormValidationAction):
                 {"preferred_foot": finded}
                 return [FollowupAction("get_bplayer")]
 
-class StopGetBPlayerForm(Action):
-    def name(self) -> Text:
-        return "stop_get_bplayer_form"
+# class StopGetBPlayerForm(Action):
+#     def name(self) -> Text:
+#         return "stop_get_bplayer_form"
 
-    def run(
-        self,
-        dispatcher: CollectingDispatcher,
-        tracker: Tracker,
-        domain: Dict[Text, Any],
-    ) -> List[Dict[Text, Any]]:
+#     def run(
+#         self,
+#         dispatcher: CollectingDispatcher,
+#         tracker: Tracker,
+#         domain: Dict[Text, Any],
+#     ) -> List[Dict[Text, Any]]:
 
-    	#Utters message to inform user form has been cancelled
-        dispatcher.utter_message(text="Hai interroto la ricerca!")
+#     	#Utters message to inform user form has been cancelled
+#         dispatcher.utter_message(text="Hai interroto la ricerca!")
 
-        #Clears slots
-        return[AllSlotsReset()]
+#         #Clears slots
+#         return[AllSlotsReset()]
 
 class GetBPlayer(Action):
     def name(self) -> Text:
@@ -242,7 +251,8 @@ class ValidateCreateTeamForm(FormValidationAction):
         tracker: Tracker,
         domain: DomainDict,
     ) -> Dict[Text, Any]:
-        
+        if tracker.latest_message["intent"]["name"] == "stop_intent":
+            return [AllSlotsReset(), Restarted()]
         print(slot_value)
         if slot_value == 'prosegui' or slot_value == '':
             return {"age": ''}
@@ -260,6 +270,8 @@ class ValidateCreateTeamForm(FormValidationAction):
     ) -> Dict[Text, Any]:
         
         print(slot_value)
+        if tracker.latest_message["intent"]["name"] == "stop_intent":
+            return [AllSlotsReset(), Restarted()]
         if slot_value == 'prosegui' or slot_value == '':
             return {"nationality": ''}
         else:
@@ -279,6 +291,8 @@ class ValidateCreateTeamForm(FormValidationAction):
     ) -> Dict[Text, Any]:
         
         print(slot_value)
+        if tracker.latest_message["intent"]["name"] == "stop_intent":
+            return [AllSlotsReset(), Restarted()]
         if slot_value == 'prosegui' or slot_value == '':
             return {"characteristic": ''}
         else:
@@ -290,22 +304,22 @@ class ValidateCreateTeamForm(FormValidationAction):
                 dispatcher.utter_message("Non ho capito, devi inserire \'Overall\' oppure \'Potential\'")
                 return {"characteristic": None}
 
-class StopCreateTeamForm(Action):
-    def name(self) -> Text:
-        return "stop_create_team_form"
+# class StopCreateTeamForm(Action):
+#     def name(self) -> Text:
+#         return "stop_create_team_form"
 
-    def run(
-        self,
-        dispatcher: CollectingDispatcher,
-        tracker: Tracker,
-        domain: Dict[Text, Any],
-    ) -> List[Dict[Text, Any]]:
+#     def run(
+#         self,
+#         dispatcher: CollectingDispatcher,
+#         tracker: Tracker,
+#         domain: Dict[Text, Any],
+#     ) -> List[Dict[Text, Any]]:
 
-    	#Utters message to inform user form has been cancelled
-        dispatcher.utter_message(text="Hai interroto la ricerca!")
+#     	#Utters message to inform user form has been cancelled
+#         dispatcher.utter_message(text="Hai interroto la ricerca!")
 
-        #Clears slots
-        return[AllSlotsReset()]
+#         #Clears slots
+#         return[AllSlotsReset()]
 
 def find_team_players(player_positions, age, nationality, characteristic, head):
     best_players = df[
