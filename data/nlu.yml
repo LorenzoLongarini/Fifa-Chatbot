@@ -172,3 +172,48 @@ nlu:
     - Ho intenzione di creare un team di calcio
     - Posso creare una squadra da zero?
     - Vorrei creare una nuova formazione di squadra
+
+
+- intent: find_info_player_intent
+  examples: |
+    - dammi informazioni su un giocatore
+    - che giocatore ti interessa?
+    - chi vuoi conoscere?
+    - vorrei sapere su qualche giocatore
+    - quali sono le statistiche di un giocatore?
+    - dimmi di più su un giocatore
+    - mi interessa sapere di un giocatore
+    - puoi parlarmi di un player?
+    - puoi dirmi qualcosa di un giocatore
+    - mi dici le caratteristiche di un giocatore
+
+- intent: view_image_intent
+  examples: |
+    - vorrei vedere
+    - voglio vedere un image
+    - fammi vedere
+    - mostrami url
+    - mostrami la foto
+    - mostrami l'immagine
+    - vorrei vedere una foto
+    - fammi vedere una foto
+    - mostrami una foto
+    - voglio vedere un immagine
+    - fammi vedere un immagine
+    - mostrami un immagine
+
+
+- intent: compare_players_intent
+  examples: |
+    - confronta questi due giocatori
+    - che giocatori vuoi confrontare?
+    - confronta due giocatori di calcio
+    - voglio paragonare due calciatori famosi
+    - quali sono le differenze tra due grandi giocatori di calcio?
+    - confronta le statistiche di due attaccanti 
+    - voglio sapere chi è migliore tra due giocatori
+    - che players vuoi confrontare?
+    - voglio confrontare due grandi nomi del calcio
+    - paragona le abilità di due players di calcio
+    - quali sono i punti di forza e di debolezza di due calciatori?
+

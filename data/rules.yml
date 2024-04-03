@@ -46,3 +46,42 @@ rules:
     - action: utter_submit
     - action: get_team 
     - action: action_reset_slot
+
+- rule: view image player
+  steps:
+  - intent: view_image_intent
+  - action: player_image_form
+  - active_loop: player_image_form
+  - slot_was_set:
+    - requested_slot: player_image
+  - active_loop: null
+  - action: utter_submit
+  - action: get_player_image
+  - action: action_reset_slot
+
+- rule: find info player
+  steps:
+    - intent: find_info_player_intent
+    - action: player_form
+    - active_loop: player_form
+    - slot_was_set:
+      - requested_slot: player
+    - active_loop: null
+    - action: utter_submit
+    - action: get_player
+    - action: action_reset_slot
+
+- rule: compare two player
+  steps:
+    - intent: compare_players_intent
+    - action: compare_players_form
+    - active_loop: compare_players_form
+    - slot_was_set:
+      - requested_slot: player_one
+    - slot_was_set:
+      - requested_slot: player_two
+    - active_loop: null
+    - action: utter_submit
+    - action: compare_two_players
+    - action: action_reset_slot
+

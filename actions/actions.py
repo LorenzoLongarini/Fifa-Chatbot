@@ -10,6 +10,7 @@
 from typing import Any, Text, Dict, List
 
 from rasa_sdk import Action, Tracker
+from rasa_sdk.forms import FormValidationAction
 from rasa_sdk.executor import CollectingDispatcher
 from rasa_sdk.types import DomainDict
 from rasa_sdk.forms import FormValidationAction
@@ -75,30 +76,146 @@ def find_values(input, search, dispatcher):
         else:
             return []
 
-class ActionFindTeam(Action):
+class ValidatePlayerForm(FormValidationAction):
     def name(self) -> Text:
-        return "find_team_action"
+        return "validate_player_form"
 
-    def run(self, 
+    def validate_player(
+        self,
+        slot_value: Any,
+        dispatcher: CollectingDispatcher,
+        tracker: Tracker,
+        domain: DomainDict,
+    ) -> Dict[Text, Any]:
+        
+        print(slot_value)
+        if slot_value == 'prosegui':
+            return {"player": ''}
+        else:
+            finded = find_values(slot_value, search='long_name', dispatcher = dispatcher)
+            if len(finded) == 0:
+                dispatcher.utter_message("Non ho trovato questo giocatore")
+                return {"player": None}
+            else:
+                return {"player": finded}
+            
+class ValidatePlayerImageForm(FormValidationAction):
+    def name(self) -> Text:
+        return "validate_player_image_form"
+
+    def validate_player_image(
+        self,
+        slot_value: Any,
+        dispatcher: CollectingDispatcher,
+        tracker: Tracker,
+        domain: DomainDict,
+    ) -> Dict[Text, Any]:
+        
+        print(slot_value)
+        if slot_value == 'prosegui':
+            return {"player_image": ''}
+        else:
+            finded = find_values(slot_value, search='long_name', dispatcher = dispatcher)
+            if len(finded) == 0:
+                dispatcher.utter_message("Non ho trovato questo giocatore")
+                return {"player_image": None}
+            else:
+                return {"player_image": finded}
+
+    
+
+class GetPlayer(Action):
+    def name(self) -> Text:
+        return "get_player"
+
+    def run(
+            self,
             dispatcher: CollectingDispatcher,
             tracker: Tracker,
-            domain: DomainDict):
+            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
         
-        team = next(tracker.get_latest_entity_values('team'), None)
-        if team is not None:
-            finded = find_values(team, search='club_name', dispatcher = dispatcher)
-            teams =  df[df['club_name'] == (str(finded))] 
-            team_infos = teams[columns].to_dict('records')
-            response = f"Le squadre con nome {team} sono:\n" + "\n".join([f"- {info['club_name']} : {info['long_name']}" for info in team_infos]) 
-            dispatcher.utter_message(text=response)
+        player = tracker.get_slot('player')
+        players = df[(df['long_name'].str.contains(player, case=False, na=False))]
+
+        if len(players) == 0:
+            dispatcher.utter_message("Non ci sono calciatori che rispettano queste condizioni!")
         else:
-            dispatcher.utter_message(text='Non ho capito a quale squadra ti riferisci')
+            one_player = players.iloc[0]
+            response = f"Il giocatore con nome {one_player['long_name']} ha le seguenti caratteristiche:\n" + "\n".join([f"- Positions: {one_player['player_positions']} \n- Club name: {one_player['club_name']} \n- Overall: {one_player['overall']} \n- Value in euros: {one_player['value_eur']} \n- Age: {one_player['age']}"])
+            dispatcher.utter_message(text=response)
+        return []
+
+
+class GetPlayerImage(Action):
+    def name(self) -> Text:
+        return "get_player_image"
+
+    def run(
+            self,
+            dispatcher: CollectingDispatcher,
+            tracker: Tracker,
+            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+        
+        player = tracker.get_slot('player_image')
+        players = df[(df['long_name'].str.contains(player, case=False, na=False))]
+
+        if len(players) == 0:
+            dispatcher.utter_message("Non ci sono calciatori che rispettano queste condizioni!")
+        else:
+            one_player = players.iloc[0]
+            response = f"Ecco l'immagine del giocatore con nome {one_player['long_name']}: URL -> {one_player['player_face_url']}\n"
+            dispatcher.utter_message(text=response)
+        return []
+    
+
+    
+
+class ValidateComparePlayersForm(FormValidationAction):
+    def name(self) -> Text:
+        return "validate_compare_players_form"
+
+    def validate_player_one(
+        self,
+        slot_value: Any,
+        dispatcher: CollectingDispatcher,
+        tracker: Tracker,
+        domain: DomainDict,
+    ) -> Dict[Text, Any]:
+        
+        print(slot_value)
+        if slot_value == 'prosegui':
+            return {"player_one": ''}
+        else:
+            finded = find_values(slot_value, search='long_name', dispatcher = dispatcher)
+            if len(finded) == 0:
+                dispatcher.utter_message("Non ho trovato questo giocatore")
+                return {"player_one": None}
+            else:
+                return {"player_one": finded}
+            
+    def validate_player_two(
+        self,
+        slot_value: Any,
+        dispatcher: CollectingDispatcher,
+        tracker: Tracker,
+        domain: DomainDict,
+    ) -> Dict[Text, Any]:
+        
+        print(slot_value)
+        if slot_value == 'prosegui':
+            return {"player_two": ''}
+        else:
+            finded = find_values(slot_value, search='long_name', dispatcher = dispatcher)
+            if len(finded) == 0:
+                dispatcher.utter_message("Non ho trovato questo giocatore")
+                return {"player_two": None}
+            else:
+                return {"player_two": finded}
 
 
 class ValidateSearchBPlayerForm(FormValidationAction):
     def name(self) -> Text:
         return "validate_bplayer_form"
-
 
     def validate_role(
         self,
@@ -121,7 +238,6 @@ class ValidateSearchBPlayerForm(FormValidationAction):
                 return {"role": None}
             else:
                 return {"role": finded}
-        
     
     def validate_league(
         self,
@@ -145,8 +261,6 @@ class ValidateSearchBPlayerForm(FormValidationAction):
             else:
                 return {"league": finded}
                 
-
-
     def validate_preferred_foot(
         self,
         slot_value: Any,
@@ -170,6 +284,32 @@ class ValidateSearchBPlayerForm(FormValidationAction):
                 {"preferred_foot": finded}
                 return [FollowupAction("get_bplayer")]
 
+
+class CompareTwoPlayers(Action):
+    def name(self) -> Text:
+        return "compare_two_players"
+
+    def run(
+            self,
+            dispatcher: CollectingDispatcher,
+            tracker: Tracker,
+            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+        
+        player_one = tracker.get_slot('player_one')
+        player_two = tracker.get_slot('player_two')
+        players_one = df[(df['long_name'].str.contains(player_one, case=False, na=False))]
+        players_two = df[(df['long_name'].str.contains(player_two, case=False, na=False))]
+
+        if len(players_one) == 0 | len(players_two) == 0:
+            dispatcher.utter_message("Non ci sono calciatori che rispettano queste condizioni!")
+        else:
+            one_player = players_one.iloc[0]
+            two_player = players_two.iloc[0]
+            #response = f"Ecco l'immagine del giocatore con nome {one_player['long_name']}: URL -> {one_player['player_face_url']}\n"
+            response = f"Ecco i due giocatori player_one: {one_player['long_name']} e player_two: {two_player['long_name']}\nPace -> {one_player['pace']} vs {two_player['pace']}\nShooting -> {one_player['shooting']} vs {two_player['shooting']}\nPassing -> {one_player['passing']} vs {two_player['passing']}\nDribbling -> {one_player['dribbling']} vs {two_player['dribbling']}\nDefending -> {one_player['defending']} vs {two_player['defending']}\nPhysic -> {one_player['physic']} vs {two_player['physic']}\n"
+            dispatcher.utter_message(text=response)
+        return []
+        
 class GetBPlayer(Action):
     def name(self) -> Text:
         return "get_bplayer"
@@ -360,3 +500,4 @@ class ResetSlot(Action):
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
         dispatcher.utter_message(text="Ora puoi chiedermi qualcos'altro!")
         return [AllSlotsReset()]
+            

@@ -19,10 +19,18 @@ intents:
 - ask_module:
     use_entities:
     - module
+- find_info_player_intent:
+      use_entities: []
+- view_image_intent:
+    use_entities: []
+- compare_players_intent:
+    use_entities: []
+
 actions:
 - action_reset_slot
 - utter_ask_role
 - find_team_action
+
 - validate_bplayer_form
 - utter_ask_league
 - utter_ask_preferred_foot
@@ -31,10 +39,26 @@ actions:
 - utter_ask_which_module
 - get_bplayer
 - stop_get_bplayer_form
+
 - validate_create_team_form
 - get_team
 - stop_create_team_form
 - utter_ask_age
+- action_reset_slot
+
+- validate_player_form
+- utter_ask_player
+- get_player
+
+- validate_player_image_form
+- utter_ask_player_image
+- get_player_image
+
+- validate_compare_players_form
+- utter_ask_player_one
+- utter_ask_player_two
+- compare_two_players
+
 responses:
   utter_greet:
   - text: Hey! How are you?
@@ -55,6 +79,10 @@ responses:
   - text: In quale campionato gioca? - Premi invio o inserisci prosegui se non hai preferenze
   utter_ask_preferred_foot:
   - text: Qual è il piede preferito del calciatore? - Premi invio o inserisci prosegui se non hai preferenze
+  utter_ask_player:
+  - text: Qual è il nome del giocatore?
+  utter_ask_player_image:
+   - text: Qual è il nome del giocatore di cui vuoi vedere la foto?
   utter_submit:
   - text: Ok hai inserito i dati correttamente!
   utter_ask_continue:
@@ -76,6 +104,13 @@ responses:
   - text: Inserisci una caratteristica (Overall oppure Potential). - Premi invio o inserisci prosegui se non hai preferenze
   utter_create_together:
   - text: Creiamo la squadra!
+  utter_ask_player_one:
+  - text: Qual è il nome del primo giocatore?
+  utter_ask_player_two:
+  - text: Qual è il nome del secondo giocatore?
+  
+  
+
 session_config:
   session_expiration_time: 60
   carry_over_slots_to_new_session: true
@@ -88,6 +123,10 @@ entities:
 - age
 - nationality
 - characteristic
+- player
+- player_image
+- player_one
+- player_two
 slots:
   team:
     type: text
@@ -151,6 +190,39 @@ slots:
       conditions:
       - active_loop: create_team_form
         requested_slot: characteristic
+  player:
+    type: text
+    influence_conversation: false
+    mappings:
+    - type: from_text
+      conditions:
+      - active_loop: player_form
+        requested_slot: player
+  player_image:
+    type: text
+    influence_conversation: false
+    mappings:
+    - type: from_text
+      conditions:
+      - active_loop: player_image_form
+        requested_slot: player_image
+  player_one:
+    type: text
+    influence_conversation: false
+    mappings:
+    - type: from_text
+      conditions:
+      - active_loop: compare_players_form
+        requested_slot: player_one
+  player_two:
+    type: text
+    influence_conversation: false
+    mappings:
+    - type: from_text
+      conditions:
+      - active_loop: compare_players_form
+        requested_slot: player_two
+
 forms:
   bplayer_form:
     ignored_intents:
@@ -158,11 +230,27 @@ forms:
     required_slots:
     - role
     - league
-    - preferred_foot
-    
+    - preferred_foot 
   create_team_form:
     required_slots:
     - module
     - age
     - nationality
     - characteristic
+  player_form:
+    ignored_intents:
+    - stop_intent
+    required_slots:
+    - player
+  player_image_form:
+    ignored_intents:
+    - stop_intent
+    required_slots:
+    - player_image
+  compare_players_form:
+    ignored_intents:
+    - stop_intent
+    required_slots:
+    - player_one
+    - player_two
+
