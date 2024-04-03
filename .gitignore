@@ -164,3 +164,4 @@ dataset/*
 
 .rasa/*
 models/*
+credentials.yml

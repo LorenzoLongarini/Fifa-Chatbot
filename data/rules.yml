@@ -12,6 +12,11 @@ rules:
   - intent: bot_challenge
   - action: utter_iamabot
 
+- rule: Find a player team
+  steps:
+  - intent: find_team_intent
+  - action: find_team_action
+
 - rule: Activate form find bplayer
   steps:
     - intent: find_best_player

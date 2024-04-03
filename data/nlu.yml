@@ -3,47 +3,47 @@ nlu:
 - intent: greet
   examples: |
     - hey
-    - hello
+    - ciao
     - hi
-    - hello there
-    - good morning
-    - good evening
-    - moin
-    - hey there
+    - salve
+    - buongiorno
+    - buonasera
+    - buoera
+    - buorno
     - let's go
-    - hey dude
-    - goodmorning
-    - goodevening
-    - good afternoon
+    - buon giorno
+    - buona sera
+    - buon pomeriggio
 - intent: goodbye
   examples: |
-    - cu
     - good by
-    - cee you later
-    - good night
+    - a presto
+    - buona notte
     - bye
     - goodbye
-    - have a nice day
-    - see you around
+    - addio
+    - ci vediamo presto
     - bye bye
-    - see you later
+    - arri vederci
 - intent: affirm
   examples: |
     - yes
     - y
-    - indeed
-    - of course
-    - that sounds good
-    - correct
+    - si
+    - s
+    - assolutamente
+    - corretto
+    - giusto
+    - sicuramente
 - intent: deny
   examples: |
     - no
     - n
-    - never
-    - I don't think so
-    - don't like that
-    - no way
-    - not really
+    - mai
+    - mai e poi mai
+    - non credo
+    - non ppenso proprio
+    - non può entrare
 - intent: mood_great
   examples: |
     - perfect
@@ -100,42 +100,24 @@ nlu:
     - Dati su [Lazio](team)
     - Statistiche di [Napoli](team)
     - Scheda tecnica del [Roma](team)
-    - Storia del [Fiorentina](team)
-    - Sono tifoso del [Genoa](team)
-    - Adoro la [Barcellona](team)
-    - Cuore [Torino](team)
-    - Da sempre per la [Cagliari](team)
-    - Un fan del [Bologna](team)
     - Quando gioca il [Verona](team)?
     - Chi gioca nel [Atalanta](team)?
     - Lista giocatori del [Venezia](team)
     - Elenco calciatori della [Salernitana](team)
     - Rosa della squadra [Monza](team)
     - Titolari del [Cremonese](team)
-    - Raccontami la storia del [Lecce](team)
-    - Origini del [Pisa](team)
-    - Fondazione del [Frosinone](team)
-    - Anni d'oro del [Perugia](team)
-    - Trionfi del [Cosenza](team)
-    - Raccontami di [Real Madrid](team)
-    - Informazioni su [Manchester United](team)
     - Scheda tecnica del [Bayern Munich](team)
     - Sono tifoso del [Paris Saint-Germain](team)
     - Amo il [Liverpool](team)
     - Il cuore appartiene alla [Juventus](team)
     - Sostenitore da tempo del [Chelsea](team)
     - Chi gioca per il [Manchester City](team)?
-    - Elenco dei giocatori per il [Borussia Dortmund](team)
     - Rosa della squadra del [FC Porto](team)
     - Formazione per l'[AS Monaco](team)
-    - Storia dell'[Arsenal](team)
 - intent: stop_intent
   examples: |
     - Fermati
     - ferm
-    - basta così
-    - bast
-    - Basta
     - Fermo
     - Alt
     - alt
@@ -173,31 +155,34 @@ nlu:
     - Posso creare una squadra da zero?
     - Vorrei creare una nuova formazione di squadra
 
-
 - intent: find_info_player_intent
   examples: |
-    - dammi informazioni su un giocatore
-    - che giocatore ti interessa?
-    - chi vuoi conoscere?
-    - vorrei sapere su qualche giocatore
-    - quali sono le statistiche di un giocatore?
-    - dimmi di più su un giocatore
+    - informazioni giocatore
+    - voglio giocatore
+    - statistiche giocatore
+    - descrivmi un calciatore
+    - parlami di un player
+    - informazioni giocatore per favore
     - mi interessa sapere di un giocatore
     - puoi parlarmi di un player?
     - puoi dirmi qualcosa di un giocatore
+    - quali sono le statistiche di un giocatore?
+    - dimmi di più su un giocatore
     - mi dici le caratteristiche di un giocatore
 
 - intent: view_image_intent
   examples: |
     - vorrei vedere
     - voglio vedere un image
-    - fammi vedere
-    - mostrami url
+    - immagine del giocatore
     - mostrami la foto
     - mostrami l'immagine
     - vorrei vedere una foto
     - fammi vedere una foto
     - mostrami una foto
+    - mostrami il viso
+    - faccia di un calciatore
+    - volto di un giocatore
     - voglio vedere un immagine
     - fammi vedere un immagine
     - mostrami un immagine
@@ -211,7 +196,6 @@ nlu:
     - voglio paragonare due calciatori famosi
     - quali sono le differenze tra due grandi giocatori di calcio?
     - confronta le statistiche di due attaccanti 
-    - voglio sapere chi è migliore tra due giocatori
     - che players vuoi confrontare?
     - voglio confrontare due grandi nomi del calcio
     - paragona le abilità di due players di calcio

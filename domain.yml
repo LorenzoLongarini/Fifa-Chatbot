@@ -44,7 +44,6 @@ actions:
 - get_team
 - stop_create_team_form
 - utter_ask_age
-- action_reset_slot
 
 - validate_player_form
 - utter_ask_player
