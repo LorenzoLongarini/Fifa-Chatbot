@@ -16,6 +16,9 @@ intents:
     use_entities: []
 - create_team_intent
 - select_module
+- ask_module:
+    use_entities:
+    - module
 actions:
 - action_reset_slot
 - utter_ask_role
@@ -25,15 +28,13 @@ actions:
 - utter_ask_preferred_foot
 - utter_submit
 - utter_iamabot
+- utter_ask_which_module
 - get_bplayer
 - stop_get_bplayer_form
 - validate_create_team_form
 - get_team
 - stop_create_team_form
-- get_module
 - utter_ask_age
-# templates:
-#   utter_433:
 responses:
   utter_greet:
   - text: Hey! How are you?
@@ -49,21 +50,30 @@ responses:
   utter_iamabot:
   - text: I am a bot, powered by Rasa.!
   utter_ask_role:
-  - text: Qual è il ruolo del calciatore? - Inserisci prosegui se non hai preferenze
+  - text: Qual è il ruolo del calciatore? - Premi invio o inserisci prosegui se non hai preferenze
   utter_ask_league:
-  - text: In quale campionato gioca? - Inserisci prosegui se non hai preferenze
+  - text: In quale campionato gioca? - Premi invio o inserisci prosegui se non hai preferenze
   utter_ask_preferred_foot:
-  - text: Qual è il piede preferito del calciatore? - Inserisci prosegui se non hai preferenze
+  - text: Qual è il piede preferito del calciatore? - Premi invio o inserisci prosegui se non hai preferenze
   utter_submit:
   - text: Ok hai inserito i dati correttamente!
   utter_ask_continue:
   - text: Sei sicuro di voler interrompere?
+  utter_ask_create_team_form_module:
+  - text: Quale sarà il modulo della squadra?
+    buttons:
+    - title: 4-3-3
+      payload: /ask_module{{"module":"4-3-3"}}
+    - title: 4-4-2
+      payload: /ask_module{{"module":"4-4-2"}}
+    - title: 3-5-2
+      payload: /ask_module{{"module":"3-5-2"}}
   utter_ask_age:
-  - text: Inserisci l'età massima. - Inserisci prosegui se non hai preferenze
+  - text: Inserisci l'età massima. - Premi invio o inserisci prosegui se non hai preferenze
   utter_ask_nationality:
-  - text: Inserisci la nazionalità. - Inserisci prosegui se non hai preferenze
+  - text: Inserisci la nazionalità. - Premi invio o inserisci prosegui se non hai preferenze
   utter_ask_characteristic:
-  - text: Inserisci una caratteristica (Overall oppure Potential). - Inserisci prosegui se non hai preferenze
+  - text: Inserisci una caratteristica (Overall oppure Potential). - Premi invio o inserisci prosegui se non hai preferenze
   utter_create_together:
   - text: Creiamo la squadra!
 session_config:
@@ -109,10 +119,14 @@ slots:
       - active_loop: bplayer_form
         requested_slot: preferred_foot
   module:
-    type: text
-    influence_conversation: true
+    type: text 
+    influence_conversation: false
     mappings:
-    - type: from_text
+    - type: from_entity
+      entity: module
+      conditions:
+      - active_loop: create_team_form
+        requested_slot: module
   age:
     type: float 
     influence_conversation: false
@@ -147,9 +161,8 @@ forms:
     - preferred_foot
     
   create_team_form:
-    ignored_intents:
-    - stop_intent_create
     required_slots:
+    - module
     - age
     - nationality
     - characteristic
