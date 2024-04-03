@@ -165,3 +165,73 @@ class ResetSlot(Action):
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
         dispatcher.utter_message(text="Ora puoi chiedermi qualcos'altro!")
         return [AllSlotsReset()]
+    
+
+class ValidateComparePlayersForm(FormValidationAction):
+    def name(self) -> Text:
+        return "validate_compare_players_form"
+
+    def validate_player_one(
+        self,
+        slot_value: Any,
+        dispatcher: CollectingDispatcher,
+        tracker: Tracker,
+        domain: DomainDict,
+    ) -> Dict[Text, Any]:
+        
+        print(slot_value)
+        if slot_value == 'prosegui':
+            return {"player_one": ''}
+        else:
+            finded = find_values(slot_value, search='long_name', dispatcher = dispatcher)
+            if len(finded) == 0:
+                dispatcher.utter_message("Non ho trovato questo giocatore")
+                return {"player_one": None}
+            else:
+                return {"player_one": finded}
+            
+    def validate_player_two(
+        self,
+        slot_value: Any,
+        dispatcher: CollectingDispatcher,
+        tracker: Tracker,
+        domain: DomainDict,
+    ) -> Dict[Text, Any]:
+        
+        print(slot_value)
+        if slot_value == 'prosegui':
+            return {"player_two": ''}
+        else:
+            finded = find_values(slot_value, search='long_name', dispatcher = dispatcher)
+            if len(finded) == 0:
+                dispatcher.utter_message("Non ho trovato questo giocatore")
+                return {"player_two": None}
+            else:
+                return {"player_two": finded}
+
+
+
+class CompareTwoPlayers(Action):
+    def name(self) -> Text:
+        return "compare_two_players"
+
+    def run(
+            self,
+            dispatcher: CollectingDispatcher,
+            tracker: Tracker,
+            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+        
+        player_one = tracker.get_slot('player_one')
+        player_two = tracker.get_slot('player_two')
+        players_one = df[(df['long_name'].str.contains(player_one, case=False, na=False))]
+        players_two = df[(df['long_name'].str.contains(player_two, case=False, na=False))]
+
+        if len(players_one) == 0 | len(players_two) == 0:
+            dispatcher.utter_message("Non ci sono calciatori che rispettano queste condizioni!")
+        else:
+            one_player = players_one.iloc[0]
+            two_player = players_two.iloc[0]
+            #response = f"Ecco l'immagine del giocatore con nome {one_player['long_name']}: URL -> {one_player['player_face_url']}\n"
+            response = f"Ecco i due giocatori player_one: {one_player['long_name']} e player_two: {two_player['long_name']}\nPace -> {one_player['pace']} vs {two_player['pace']}\nShooting -> {one_player['shooting']} vs {two_player['shooting']}\nPassing -> {one_player['passing']} vs {two_player['passing']}\nDribbling -> {one_player['dribbling']} vs {two_player['dribbling']}\nDefending -> {one_player['defending']} vs {two_player['defending']}\nPhysic -> {one_player['physic']} vs {two_player['physic']}\n"
+            dispatcher.utter_message(text=response)
+        return []

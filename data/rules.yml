@@ -54,3 +54,17 @@ rules:
     - action: get_player
     - action: action_reset_slot
 
+- rule: compare two player
+  steps:
+    - intent: compare_players_intent
+    - action: compare_players_form
+    - active_loop: compare_players_form
+    - slot_was_set:
+      - requested_slot: player_one
+    - slot_was_set:
+      - requested_slot: player_two
+    - active_loop: null
+    - action: utter_submit
+    - action: compare_two_players
+    - action: action_reset_slot
+

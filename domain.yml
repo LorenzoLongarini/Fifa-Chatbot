@@ -18,11 +18,19 @@ intents:
 actions:
 - action_reset_slot
 - validate_player_form
-- validate_player_image_form
 - utter_ask_player
-- utter_ask_player_image
 - get_player
+
+- validate_player_image_form
+- utter_ask_player_image
 - get_player_image
+
+- validate_compare_players_form
+- utter_ask_player_one
+- utter_ask_player_two
+- compare_two_players
+
+
 
 
 
@@ -56,6 +64,10 @@ responses:
   - text: Ok hai inserito i dati correttamente!
   utter_ask_continue:
   - text: Sei sicuro di voler interrompere?
+  utter_ask_player_one:
+  - text: Qual è il nome del primo giocatore?
+  utter_ask_player_two:
+  - text: Qual è il nome del secondo giocatore?
   
   
 
@@ -71,6 +83,8 @@ entities:
   - preferred_foot
   - player
   - player_image
+  - player_one
+  - player_two
 
 slots:
   team:
@@ -118,6 +132,22 @@ slots:
       conditions:
       - active_loop: player_image_form
         requested_slot: player_image
+  player_one:
+    type: text
+    influence_conversation: false
+    mappings:
+    - type: from_text
+      conditions:
+      - active_loop: compare_players_form
+        requested_slot: player_one
+  player_two:
+    type: text
+    influence_conversation: false
+    mappings:
+    - type: from_text
+      conditions:
+      - active_loop: compare_players_form
+        requested_slot: player_two
 
 forms:
   bplayer_form:
@@ -137,4 +167,10 @@ forms:
     - stop_intent
     required_slots:
     - player_image
+  compare_players_form:
+    ignored_intents:
+    - stop_intent
+    required_slots:
+    - player_one
+    - player_two
 
