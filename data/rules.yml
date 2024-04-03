@@ -17,19 +17,32 @@ rules:
     - intent: find_best_player
     - action: bplayer_form
     - active_loop: bplayer_form
+    - slot_was_set:
+      - requested_slot: role
+    - slot_was_set:
+      - requested_slot: league
+    - slot_was_set:
+      - requested_slot: preferred_foot
+    - active_loop: null
+    - action: utter_submit
+    - action: get_bplayer
+    - action: action_reset_slot
+    
 
-# - rule: Stop Form
-#   steps:
-#   - intent: stop_intent
-#   - action: stop_get_bplayer_form
-#   - action: action_deactivate_loop #deactivates form
-#   - active_loop: null #kills loop
-
-# - rule: Abort form find bplayer
-#   condition:
-#   - active_loop: bplayer_form
-#   steps:
-#   - intent: chitchat
-#   - action: utter_iamabot
-#   - action: bplayer_form
-#   - active_loop: bplayer_form
+- rule: Activate form create team
+  steps:
+    - intent: create_team_intent
+    - action: create_team_form
+    - active_loop: create_team_form
+    - slot_was_set:
+      - requested_slot: module
+    - slot_was_set:
+      - requested_slot: age
+    - slot_was_set:
+      - requested_slot: nationality
+    - slot_was_set:
+      - requested_slot: characteristic
+    - active_loop: null
+    - action: utter_submit
+    - action: get_team 
+    - action: action_reset_slot

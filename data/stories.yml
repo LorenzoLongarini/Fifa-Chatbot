@@ -34,22 +34,7 @@ stories:
   - intent: find_team_intent
   - action: find_team_action
 
-- story: find best player
-  steps:
-    - intent: find_best_player
-    - action: bplayer_form
-    - active_loop: bplayer_form
-    - slot_was_set:
-      - requested_slot: role
-    - slot_was_set:
-      - requested_slot: league
-    - slot_was_set:
-      - requested_slot: preferred_foot
-    - active_loop: null
-    - action: utter_submit
-    - action: get_bplayer
-    - action: action_reset_slot
-
+    
 - story: stop for role
   steps:
     - intent: find_best_player
@@ -65,16 +50,19 @@ stories:
     - active_loop: null
     - action: action_reset_slot
 
-# - story: dectivate form
-#   steps:
-#   - intent: find_best_player
-#   - action: bplayer_form
-#   - active_loop: bplayer_form
-#   - intent: stop_intent
-#   - action: utter_ask_continue
-#   - or:
-#     - intent: stop_intent
-#     - intent: continue_intent
-#   - action: action_deactivate_loop
-#   - active_loop: null
-#   - action: action_reset_slot
+- story: stop create new team
+  steps:
+    - intent: create_team_intent
+    - action: create_team_form
+    - active_loop: create_team_form
+    - slot_was_set:
+      - requested_slot: module
+    - slot_was_set:
+      - requested_slot: age
+    - intent: stop_intent
+    - action: action_deactivate_loop
+    - active_loop: null
+    - slot_was_set:
+      - requested_slot: null
+    - active_loop: null
+    - action: action_reset_slot

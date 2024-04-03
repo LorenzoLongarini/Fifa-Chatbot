@@ -12,7 +12,13 @@ intents:
 - mood_unhappy
 - stop_intent:
     use_entities: []
-- continue_intent
+- stop_intent_create:
+    use_entities: []
+- create_team_intent
+- select_module
+- ask_module:
+    use_entities:
+    - module
 actions:
 - action_reset_slot
 - utter_ask_role
@@ -22,8 +28,13 @@ actions:
 - utter_ask_preferred_foot
 - utter_submit
 - utter_iamabot
+- utter_ask_which_module
 - get_bplayer
 - stop_get_bplayer_form
+- validate_create_team_form
+- get_team
+- stop_create_team_form
+- utter_ask_age
 responses:
   utter_greet:
   - text: Hey! How are you?
@@ -37,21 +48,34 @@ responses:
   utter_goodbye:
   - text: Bye
   utter_iamabot:
-  - text: I am a bot, powered by Rasa.
-  utter_name_player:
-  - text: What is the name of the player?
-  utter_confirm_create_team:
-  - text: You have a team!
+  - text: I am a bot, powered by Rasa.!
   utter_ask_role:
-  - text: Qual è il ruolo del calciatore? - Inserisci skip per saltare la selezione
+  - text: Qual è il ruolo del calciatore? - Premi invio o inserisci prosegui se non hai preferenze
   utter_ask_league:
-  - text: In quale campionato gioca? - Inserisci skip per saltare la selezione
+  - text: In quale campionato gioca? - Premi invio o inserisci prosegui se non hai preferenze
   utter_ask_preferred_foot:
-  - text: Qual è il piede preferito del calciatore? - Inserisci skip per saltare la selezione
+  - text: Qual è il piede preferito del calciatore? - Premi invio o inserisci prosegui se non hai preferenze
   utter_submit:
   - text: Ok hai inserito i dati correttamente!
   utter_ask_continue:
   - text: Sei sicuro di voler interrompere?
+  utter_ask_create_team_form_module:
+  - text: Quale sarà il modulo della squadra?
+    buttons:
+    - title: 4-3-3
+      payload: /ask_module{{"module":"4-3-3"}}
+    - title: 4-4-2
+      payload: /ask_module{{"module":"4-4-2"}}
+    - title: 3-5-2
+      payload: /ask_module{{"module":"3-5-2"}}
+  utter_ask_age:
+  - text: Inserisci l'età massima. - Premi invio o inserisci prosegui se non hai preferenze
+  utter_ask_nationality:
+  - text: Inserisci la nazionalità. - Premi invio o inserisci prosegui se non hai preferenze
+  utter_ask_characteristic:
+  - text: Inserisci una caratteristica (Overall oppure Potential). - Premi invio o inserisci prosegui se non hai preferenze
+  utter_create_together:
+  - text: Creiamo la squadra!
 session_config:
   session_expiration_time: 60
   carry_over_slots_to_new_session: true
@@ -60,6 +84,10 @@ entities:
 - role
 - league
 - preferred_foot
+- module
+- age
+- nationality
+- characteristic
 slots:
   team:
     type: text
@@ -90,6 +118,39 @@ slots:
       conditions:
       - active_loop: bplayer_form
         requested_slot: preferred_foot
+  module:
+    type: text 
+    influence_conversation: false
+    mappings:
+    - type: from_entity
+      entity: module
+      conditions:
+      - active_loop: create_team_form
+        requested_slot: module
+  age:
+    type: float 
+    influence_conversation: false
+    mappings:
+    - type: from_text
+      conditions:
+      - active_loop: create_team_form
+        requested_slot: age
+  nationality:
+    type: text
+    influence_conversation: false
+    mappings:
+    - type: from_text
+      conditions:
+      - active_loop: create_team_form
+        requested_slot: nationality
+  characteristic:
+    type: text
+    influence_conversation: false
+    mappings:
+    - type: from_text
+      conditions:
+      - active_loop: create_team_form
+        requested_slot: characteristic
 forms:
   bplayer_form:
     ignored_intents:
@@ -98,3 +159,10 @@ forms:
     - role
     - league
     - preferred_foot
+    
+  create_team_form:
+    required_slots:
+    - module
+    - age
+    - nationality
+    - characteristic
