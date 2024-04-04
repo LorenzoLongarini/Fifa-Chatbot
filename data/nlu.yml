@@ -46,42 +46,39 @@ nlu:
     - non può entrare
 - intent: mood_great
   examples: |
-    - perfect
-    - great
-    - amazing
-    - feeling like a king
-    - wonderful
-    - I am feeling very good
-    - I am great
-    - I am amazing
-    - I am going to save the world
-    - super stoked
-    - extremely good
-    - so so perfect
-    - so good
-    - so perfect
+    - perfetto
+    - bene
+    - incredibile
+    - mi sento un re
+    - meravigliosamente
+    - Mi sento molto bene
+    - Mi sento bene
+    - Sto incredibilmente
+    - Salverò il mondo
+    - estremamente bene
+    - molto bene
+    - perfettamente
 - intent: mood_unhappy
   examples: |
-    - my day was horrible
-    - I am sad
-    - I don't feel very well
-    - I am disappointed
-    - super sad
-    - I'm so sad
-    - sad
-    - very sad
-    - unhappy
-    - not good
-    - not very good
-    - extremly sad
-    - so saad
-    - so sad
+    - oggi è stato terribile
+    - Sono triste
+    - Non mi sento molto bene
+    - molto triste
+    - Sono così triste
+    - triste
+    - molto triste
+    - infelice
+    - non bene
+    - non molto bene
+    - estremamente triste
+    - molto mae
+    - olto male
 - intent: bot_challenge
   examples: |
-    - are you a bot?
-    - are you a human?
-    - am I talking to a bot?
-    - am I talking to a human?
+    - sei un bot?
+    - sei un umano?
+    - sto parlando a un bot?
+    - sto parlando a un umano?
 - intent: find_best_player
   examples: |
     - Chi è il miglior calciatore?
@@ -200,4 +197,24 @@ nlu:
     - voglio confrontare due grandi nomi del calcio
     - paragona le abilità di due players di calcio
     - quali sono i punti di forza e di debolezza di due calciatori?
+
+- intent: start
+  examples: |
+    - start
+    - open
+    - begin
+    - init
+    - inizia
+
+- intent: help
+  examples: |
+    - cosa posso chiederti?
+    - quali sono le tue funzioni?
+    - cosa fai?
+    - cosa dovrei chiederti?
+    - come puoi aiutarmi?
+    - ho bisogno del tuo aiuto
+    - help
+    - aiuto
+    - /help
 

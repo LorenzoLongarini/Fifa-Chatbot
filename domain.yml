@@ -25,6 +25,7 @@ intents:
     use_entities: []
 - compare_players_intent:
     use_entities: []
+- start
 
 actions:
 - action_reset_slot
@@ -57,21 +58,24 @@ actions:
 - utter_ask_player_one
 - utter_ask_player_two
 - compare_two_players
+- utter_start
 
 responses:
   utter_greet:
-  - text: Hey! How are you?
+  - text: Ciao! Come va?
+  - text: Ehila!
+  - text: Ciao! Come posso aiutarti?
   utter_cheer_up:
-  - text: 'Here is something to cheer you up:'
+  - text: 'Spero che questa immagini possa rallegrarti:'
     image: https://i.imgur.com/nGF1K8f.jpg
   utter_did_that_help:
-  - text: Did that help you?
+  - text: Ti è stato utile?
   utter_happy:
-  - text: Great, carry on!
+  - text: Daje forza Roma!
   utter_goodbye:
   - text: Bye
   utter_iamabot:
-  - text: I am a bot, powered by Rasa.!
+  - text: Se non conosci la risposta la situazione è grave.
   utter_ask_role:
   - text: Qual è il ruolo del calciatore? - Premi invio o inserisci prosegui se non hai preferenze
   utter_ask_league:
@@ -102,11 +106,28 @@ responses:
   utter_ask_characteristic:
   - text: Inserisci una caratteristica (Overall oppure Potential). - Premi invio o inserisci prosegui se non hai preferenze
   utter_create_together:
-  - text: Creiamo la squadra!
+  - text: "Creiamo la squadra!"
   utter_ask_player_one:
-  - text: Qual è il nome del primo giocatore?
+  - text: "Qual è il nome del primo giocatore?"
   utter_ask_player_two:
-  - text: Qual è il nome del secondo giocatore?
+  - text: "Qual è il nome del secondo giocatore?"
+  utter_start:
+  - text: "Benvenuto nel Chatbot di Fifa22, come posso esserti utile? \nPer sapere cosa posso fare digita help"
+  - text: "Ciao, sono il Chatbot di Fifa 22, fammi qualche domanda! \nPuoi usare \help per sapere cosa puoi chiedermi"
+  utter_help:
+  - text: "Puoi utilizzare uno dei seguenti comandi per interagire con me:
+          \n
+          \n- Trova il miglior giocatore - per cercare il giocatore con le statistiche più forti.
+          \n
+          \n- Crea una squadra: per creare la tua squadra personalizzata.
+          \n
+          \n- Confronta due giocatori: per valutare quale tra due calciatori è più forte.
+          \n
+          \n- Trova la rosa di una squadra: per trovare tutti i calciatori appartenenti ad una squadra
+          \n
+          \n- Trova statistiche di un calciatore: per visualizzare le statistiche di un certo calciatore
+          \n
+          \n- Trova immagine di un calciatore: per visualizzare l'immagine di un calciatore"
   
   
 

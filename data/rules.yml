@@ -12,6 +12,17 @@ rules:
   - intent: bot_challenge
   - action: utter_iamabot
 
+- rule: start bot
+  steps:
+  - intent: start
+  - action: utter_start
+
+- rule: greet bot
+  steps:
+  - intent: greet
+  - action: utter_greet
+
+
 - rule: Find a player team
   steps:
   - intent: find_team_intent
