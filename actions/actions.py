@@ -20,6 +20,7 @@ import pandas as pd
 import sys
 from fuzzywuzzy import process
 from rasa_sdk.events import AllSlotsReset
+import random
 # sys.path.append('../utils')
 # from utils.utility import find_words as fw
 
@@ -497,7 +498,8 @@ class ValidateCreateTeamForm(FormValidationAction):
         if tracker.latest_message["intent"]["name"] == "stop_intent":
             return [AllSlotsReset(), Restarted()]
         if slot_value == 'prosegui' or slot_value == '':
-            return {"characteristic": 'overall'}
+            random_value = random.choice(char)
+            return {"characteristic": random_value}
         else:
             finded = process.extract(str(slot_value), char, limit= 1)
             print(finded)

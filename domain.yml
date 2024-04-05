@@ -113,7 +113,7 @@ responses:
   - text: "Qual è il nome del secondo giocatore?"
   utter_start:
   - text: "Benvenuto nel Chatbot di Fifa22, come posso esserti utile? \nPer sapere cosa posso fare digita help"
-  - text: "Ciao, sono il Chatbot di Fifa 22, fammi qualche domanda! \nPuoi usare \help per sapere cosa puoi chiedermi"
+  - text: "Ciao, sono il Chatbot di Fifa 22, fammi qualche domanda! \nPuoi usare help per sapere cosa puoi chiedermi"
   utter_help:
   - text: "Puoi utilizzare uno dei seguenti comandi per interagire con me:
           \n
