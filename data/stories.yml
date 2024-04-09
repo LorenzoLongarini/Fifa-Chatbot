@@ -62,6 +62,7 @@ stories:
     - action: action_deactivate_loop
     - active_loop: null
     - slot_was_set:
+    
       - requested_slot: null
     - action: action_reset_slot
 

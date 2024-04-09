@@ -26,6 +26,7 @@ intents:
 - compare_players_intent:
     use_entities: []
 - start
+- help
 
 actions:
 - action_reset_slot
@@ -252,6 +253,8 @@ forms:
     - league
     - preferred_foot 
   create_team_form:
+    ignored_intents:
+    - stop_intent
     required_slots:
     - module
     - age
