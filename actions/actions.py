@@ -434,9 +434,9 @@ class ValidateCreateTeamForm(FormValidationAction):
         tracker: Tracker,
         domain: DomainDict,
     ) -> Dict[Text, Any]:
-        
+        max_age = int(df['age'].max())
         if slot_value == 'prosegui' or slot_value == '':
-            return {"age": df['age'].max()}
+            return {"age": max_age}
         elif not slot_value.isdigit():
             dispatcher.utter_message("Inserisci un valore numerico")
             return {"age": None}
