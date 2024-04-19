@@ -164,4 +164,5 @@ dataset/*
 
 .rasa/*
 models/*
+!models/.gitkeep
 /credentials.yml
