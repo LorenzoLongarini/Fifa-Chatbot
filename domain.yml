@@ -78,11 +78,11 @@ responses:
   utter_iamabot:
   - text: Se non conosci la risposta la situazione è grave.
   utter_ask_role:
-  - text: Qual è il ruolo del calciatore? - Premi invio o inserisci prosegui se non hai preferenze
+  - text: Qual è il ruolo del calciatore? - Digita prosegui se non hai preferenze
   utter_ask_league:
-  - text: In quale campionato gioca? - Premi invio o inserisci prosegui se non hai preferenze
+  - text: In quale campionato gioca? - Digita prosegui se non hai preferenze
   utter_ask_preferred_foot:
-  - text: Qual è il piede preferito del calciatore? - Premi invio o inserisci prosegui se non hai preferenze
+  - text: Qual è il piede preferito del calciatore? - Digita prosegui se non hai preferenze
   utter_ask_player:
   - text: Qual è il nome del giocatore?
   utter_ask_player_image:
@@ -101,11 +101,11 @@ responses:
     - title: 3-5-2
       payload: /ask_module{{"module":"3-5-2"}}
   utter_ask_age:
-  - text: Inserisci l'età massima. - Premi invio o inserisci prosegui se non hai preferenze
+  - text: Inserisci l'età massima. - Digita prosegui se non hai preferenze
   utter_ask_nationality:
-  - text: Inserisci la nazionalità. - Premi invio o inserisci prosegui se non hai preferenze
+  - text: Inserisci la nazionalità (Digita in Inglese). - Digita prosegui se non hai preferenze
   utter_ask_characteristic:
-  - text: Inserisci una caratteristica (Overall oppure Potential). - Premi invio o inserisci prosegui se non hai preferenze
+  - text: Inserisci una caratteristica (Overall oppure Potential). - Digita prosegui se non hai preferenze
   utter_create_together:
   - text: "Creiamo la squadra!"
   utter_ask_player_one:
@@ -129,6 +129,8 @@ responses:
           \n- Trova statistiche di un calciatore: per visualizzare le statistiche di un certo calciatore
           \n
           \n- Trova immagine di un calciatore: per visualizzare l'immagine di un calciatore"
+  utter_please_rephrase:
+  - text: Mi dispiace ma non credo di aver capito. Potresti riformulare la frase?
   
   
 

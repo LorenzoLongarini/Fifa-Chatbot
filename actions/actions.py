@@ -126,7 +126,7 @@ class GetPlayer(Action):
             dispatcher.utter_message("Non ci sono calciatori che rispettano queste condizioni!")
         else:
             one_player = players.iloc[0]
-            response = f"Il giocatore con nome {one_player['long_name']} ha le seguenti caratteristiche:\n" + "\n".join([f"- Positions: {one_player['player_positions']} \n- Club name: {one_player['club_name']} \n- Overall: {one_player['overall']} \n- Value in euros: {one_player['value_eur']} \n- Age: {one_player['age']}"])
+            response = f"Il giocatore con nome {one_player['long_name']} ha le seguenti caratteristiche:\n" + "\n".join([f"- Ruolo: {one_player['player_positions']} \n- Squadra: {one_player['club_name']} \n- Punteggio complessivo: {one_player['overall']} \n- Valore in euro: {one_player['value_eur']} \n- Età: {one_player['age']}"])
             dispatcher.utter_message(text=response)
         return []
 
@@ -214,7 +214,7 @@ class CompareTwoPlayers(Action):
             one_player = players_one.iloc[0]
             two_player = players_two.iloc[0]
             #response = f"Ecco l'immagine del giocatore con nome {one_player['long_name']}: URL -> {one_player['player_face_url']}\n"
-            response = f"Ecco i due giocatori player_one: {one_player['long_name']} e player_two: {two_player['long_name']}\nPace -> {one_player['pace']} vs {two_player['pace']}\nShooting -> {one_player['shooting']} vs {two_player['shooting']}\nPassing -> {one_player['passing']} vs {two_player['passing']}\nDribbling -> {one_player['dribbling']} vs {two_player['dribbling']}\nDefending -> {one_player['defending']} vs {two_player['defending']}\nPhysic -> {one_player['physic']} vs {two_player['physic']}\n"
+            response = f"Ecco i due giocatori player_one: {one_player['long_name']} e player_two: {two_player['long_name']}\nVelocità -> {one_player['pace']} vs {two_player['pace']}\nTiro -> {one_player['shooting']} vs {two_player['shooting']}\nPassaggio -> {one_player['passing']} vs {two_player['passing']}\nDribbling -> {one_player['dribbling']} vs {two_player['dribbling']}\nDifesa -> {one_player['defending']} vs {two_player['defending']}\nFisico -> {one_player['physic']} vs {two_player['physic']}\n"
             dispatcher.utter_message(text=response)
         return []
 

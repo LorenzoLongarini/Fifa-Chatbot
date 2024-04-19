@@ -100,4 +100,14 @@ rules:
     - action: utter_submit
     - action: compare_two_players
     - action: action_reset_slot
+  
+- rule: Riformulare la frase per una treshold bassa
+  steps:
+    - intent: nlu_fallback
+    - action: utter_please_rephrase
+
+- rule: Help rule 
+  steps:
+  - intent: help
+  - action: utter_help
 
